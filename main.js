@@ -28,7 +28,7 @@ module.exports.loop = function () {
   var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
   console.log('Upgraders: ' + upgraders.length);
 
-  if(upgraders.length < 1) {
+  if(upgraders.length < 2) {
     var upgraderName = Game.spawns['The Base'].createCreep([WORK,CARRY,MOVE], undefined, {role: 'upgrader'});
     console.log('Spawning new upgrader: ' + upgraderName);
   }
