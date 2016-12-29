@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"],
+    "no-console": "off",
+    "indent": [ "error", 2 ],
+    "quotes": [ "error", "single" ],
+    "semi": ["error", "always"],
+    "linebreak-style": [ "error", "unix" ]
+  },
+    "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true,
+    "jasmine": true
+  },
+  "globals": {
+    "_": true,
+    "Game": true,
+    "Memory": true,
+    "WORK": true,
+    "CARRY": true,
+    "MOVE": true,
+    "FIND_HOSTILE_CREEPS": true,
+    "FIND_STRUCTURES": true,
+    "FIND_CONSTRUCTION_SITES": true,
+    "ERR_NOT_IN_RANGE": true,
+    "FIND_SOURCES": true,
+    "STRUCTURE_EXTENSION": true,
+    "RESOURCE_ENERGY": true,
+    "STRUCTURE_SPAWN": true,
+    "STRUCTURE_TOWER": true,
+  },
+  "ecmaFeatures": {
+    "modules": true,
+    "experimentalObjectRestSpread": true,
+    "impliedStrict": true
+  },
+  "extends": "eslint:recommended"
+}
