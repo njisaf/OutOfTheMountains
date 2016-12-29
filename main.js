@@ -1,8 +1,8 @@
 'use strict';
 
-const roleHarvester = require('./roles/harvester.js');
-const roleUpgrader = require('./roles/upgrader.js');
-const roleBuilder = require('./roles/builder.js');
+const roleHarvester = require('role-harvester.js');
+const roleUpgrader = require('role-upgrader.js');
+const roleBuilder = require('role-builder.js');
 
 module.exports.loop = function () {
 
