@@ -1,8 +1,23 @@
 'use strict';
 
+var dataCreepCount = require('data-creep-count');
+
 module.exports = {
 
-  /** @param {Creep} creep **/
+  count: 0,
+
+  spawn: function() {
+    var creeplist = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+    console.log('Harvesters: ' + creeplist.length);
+    this.count = creeplist.length;
+    console.log('Harvesters count now: ', this.count);
+
+    if(this.count < dataCreepCount.harvester) {
+      var newName = Game.spawns['The Base'].createCreep([WORK, CARRY, MOVE, MOVE], undefined, {role: 'harvester'});
+      console.log('Spawning new harvester: ', newName);
+    }
+  },
+
   run: function(creep) {
     if(creep.carry.energy < creep.carryCapacity) {
       var sources = creep.room.find(FIND_SOURCES);
