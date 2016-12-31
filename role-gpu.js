@@ -40,8 +40,6 @@ module.exports = {
         }
       }
     }
-    creep.memory.role = 'builder';
-    this.builder(creep);
   },
 
   upgrader: function(creep) {
@@ -93,7 +91,5 @@ module.exports = {
         creep.moveTo(sources[0]);
       }
     }
-    creep.memory.role = 'upgrader';
-    this.upgrader(creep);
   },
 };
