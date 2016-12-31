@@ -56,9 +56,9 @@ module.exports.loop = function() {
         //creep template, or 'creepLate' eh?
         let creepLate = {
           name: Game.creeps[myCreep],
-          model: Game.creeps[myCreep].model,
-          role: Game.creeps[myCreep].role,
-          base: Game.creeps[myCreep].base,
+          model: Game.creeps[myCreep].memory.model,
+          role: Game.creeps[myCreep].memory.role,
+          base: Game.creeps[myCreep].memory.base,
         };
 
         newRoom.myCreeps.push(creepLate);
