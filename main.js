@@ -48,21 +48,21 @@ module.exports.loop = function() {
         hostileStructuresCount: structListFoesCount,
         hostileCreepsCount: hostileCreepCount,
         myStructures: myStructuresObj,
-        myCreeps: [],
+        myCreeps: {},
       };
 
       //add creeps to array;
-      for (var myCreep in creepList) {
-        //creep template, or 'creepLate' eh?
+      for (var j = 0; j < creepList.length; ++j) {
+        let creep = Game.creeps[creepList[j].name].memory;
         let creepLate = {
-          name: Game.creeps[myCreep],
-          model: Game.creeps[myCreep].memory.model,
-          role: Game.creeps[myCreep].memory.role,
-          base: Game.creeps[myCreep].memory.base,
+          model: creep.model,
+          role: creep.role,
+          base: creep.base,
         };
 
-        newRoom.myCreeps.push(creepLate);
+        newRoom.myCreeps[creep.name] = creepLate;
       }
+
       //stick the room template on dataList
       console.log('newRoom: ', newRoom);
       Memory.dataList.myRooms[room] = newRoom;
