@@ -23,10 +23,11 @@ module.exports.loop = function() {
 
     //loop over rooms;
     for (var room in Game.rooms) {
-      //variables
+      //find things in room
       let structListMine = Game.rooms[room].find(FIND_MY_STRUCTURES);
       let structListFoes = Game.rooms[room].find(FIND_HOSTILE_STRUCTURES);
       let hostileCreepCount = Game.rooms[room].find(FIND_HOSTILE_CREEPS).length;
+      let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
 
       //template for room;
       let newRoom = {
@@ -36,11 +37,22 @@ module.exports.loop = function() {
         myCreeps: new LL(),
       };
 
-      //find all creeps in room
-      let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+      for (var myCreep in creepList) {
+        //creep template, or 'creepLate' eh?
+        let creepLate = {
+          name: Game.creeps[myCreep],
+          model: Game.creeps[myCreep].model,
+          role: Game.creeps[myCreep].role,
+          base: Game.creeps[myCreep].base,
+        };
 
+        newRoom.creeps.append(creepLate);
+      }
+      //stick the room template on dataList
+      dataList.append(newRoom);
     }
-
+    //stick dataList in memory;
+    Memory.dataList = dataList;
   }
 
   //execute roles for all creeps
