@@ -2,17 +2,17 @@
 
 module.exports = function LinkedList() {
 
-  var Node = function(element) {
+  let Node = function(element) {
     this.element = element;
     this.next = null;
   };
 
-  var length = 0;
-  var head = null;
+  let length = 0;
+  let head = null;
 
   this.append = function(element) {
-    var node = new Node(element);
-    var current = null;
+    let node = new Node(element);
+    let current = null;
 
     if(!head) {
       console.log('No list head. New node will be head;');
@@ -33,10 +33,10 @@ module.exports = function LinkedList() {
       return false;
     }
 
-    var node = new Node(element);
-    var current = head;
-    var previous = null;
-    var index = 0;
+    let node = new Node(element);
+    let current = head;
+    let previous = null;
+    let index = 0;
 
     if(position === 0) {
       console.log('Inserting new node at head. Previous head will be next node;');
@@ -60,9 +60,9 @@ module.exports = function LinkedList() {
       return false;
     }
 
-    var current = head;
-    var previous = null;
-    var index = 0;
+    let current = head;
+    let previous = null;
+    let index = 0;
 
     if(position === 0) {
       console.log('Removing head. Next item in list will be assigned as head;');
@@ -78,6 +78,58 @@ module.exports = function LinkedList() {
     return current.element;
   };
 
+  this.indexOf = function(element) {
+    let current = head;
+    let index = -1;
 
+    while(current) {
+      if(element === current.element) {
+        return index;
+      }
+      ++index;
+      current = current.next;
+    }
+    return -1;
+  };
+
+  this.remove = function(element) {
+    let index = this.indexOf(element);
+    return this.removeAt(index);
+  };
+
+  this.isEmpty = function() {
+    return length === 0;
+  };
+
+  this.getHead = function() {
+    return head;
+  };
+
+  this.size = function() {
+    return length;
+  };
+
+  this.removeDuplicates = function() {
+    if (!head || !head.next) {
+      console.log('List is either empty or contains a single node. No duplicates.');
+      return;
+    }
+
+    let previous = head;
+    let current = head.next;
+    let nodes = {};
+
+    while(current) {
+      if(!nodes[current.element]) {
+        nodes[current.element] = true;
+      } else {
+        previous.next = current.next;
+        --length;
+      }
+      previous = current;
+      current = current.next;
+    }
+
+  };
 
 };
