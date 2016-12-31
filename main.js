@@ -1,6 +1,6 @@
 'use strict';
 
-// const ll = require('data-linked-list');
+const LL = require('data-linked-list');
 const GPU = require('role-gpu');
 
 module.exports.loop = function() {
@@ -13,7 +13,35 @@ module.exports.loop = function() {
     }
   }
 
-  //loop over linked list, update info;
+  //detect if there is a linked list in memory, and if not create one containing all rooms.
+
+  if(!Memory.dataList) {
+    //create list;
+    let dataList = new LL();
+
+    //loop over list of all rooms and create a node for each on dataList;
+
+    //loop over rooms;
+    for (var room in Game.rooms) {
+      //variables
+      let structListMine = Game.rooms[room].find(FIND_MY_STRUCTURES);
+      let structListFoes = Game.rooms[room].find(FIND_HOSTILE_STRUCTURES);
+      let hostileCreepCount = Game.rooms[room].find(FIND_HOSTILE_CREEPS).length;
+
+      //template for room;
+      let newRoom = {
+        myStructures: structListMine,
+        hostileStructures: structListFoes,
+        hostileCreeps: hostileCreepCount,
+        myCreeps: new LL(),
+      };
+
+      //find all creeps in room
+      let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+
+    }
+
+  }
 
   //execute roles for all creeps
   for(var creepName in Game.creeps) {
