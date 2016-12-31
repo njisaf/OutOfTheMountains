@@ -1,7 +1,5 @@
 'use strict';
 
-var creepCounter = require('data-creep-count');
-
 module.exports.loop = function() {
 
   //clear dead creeps from memory
