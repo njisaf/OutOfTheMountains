@@ -1,6 +1,6 @@
 'use strict';
 
-const LL = require('data-linked-list');
+// const LL = require('data-linked-list');
 const GPU = require('role-gpu');
 
 module.exports.loop = function() {
@@ -17,7 +17,10 @@ module.exports.loop = function() {
 
   if(!Memory.dataList) {
     //create list;
-    Memory.dataList = new LL();
+    let dataList = {
+      myRooms: new Object(),
+    };
+    Memory.dataList = dataList;
 
     //loop over list of all rooms and create a node for each on dataList;
 
@@ -34,7 +37,7 @@ module.exports.loop = function() {
         myStructures: structListMine,
         hostileStructures: structListFoes,
         hostileCreeps: hostileCreepCount,
-        myCreeps: new LL(),
+        myCreeps: new Array(),
       };
 
       for (var myCreep in creepList) {
@@ -46,11 +49,11 @@ module.exports.loop = function() {
           base: Game.creeps[myCreep].base,
         };
 
-        newRoom.myCreeps.append(creepLate);
+        newRoom.myCreeps.push(creepLate);
       }
       //stick the room template on dataList
       console.log('newRoom: ', newRoom);
-      Memory.dataList.append(newRoom);
+      Memory.dataList.myRooms[room] = newRoom;
     }
   }
 
