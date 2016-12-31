@@ -18,7 +18,7 @@ module.exports.loop = function() {
   if(!Memory.dataList) {
     //create list;
     let dataList = {
-      myRooms: new Object(),
+      myRooms: {},
     };
     Memory.dataList = dataList;
 
@@ -28,18 +28,30 @@ module.exports.loop = function() {
     for (var room in Game.rooms) {
       //find things in room
       let structListMine = Game.rooms[room].find(FIND_MY_STRUCTURES);
-      let structListFoes = Game.rooms[room].find(FIND_HOSTILE_STRUCTURES);
+      let structListFoesCount = Game.rooms[room].find(FIND_HOSTILE_STRUCTURES).length;
       let hostileCreepCount = Game.rooms[room].find(FIND_HOSTILE_CREEPS).length;
       let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
 
+      //build structure objects from list;
+      let myStructuresObj = {};
+
+      for (var struct in structListMine) {
+        let structLate = {
+          position: struct.pos,
+          id: struct.id,
+        };
+        myStructuresObj[struct.structureType] = structLate;
+      }
+
       //template for room;
       let newRoom = {
-        myStructures: structListMine,
-        hostileStructures: structListFoes,
-        hostileCreeps: hostileCreepCount,
-        myCreeps: new Array(),
+        hostileStructuresCount: structListFoesCount,
+        hostileCreepsCount: hostileCreepCount,
+        myStructures: myStructuresObj,
+        myCreeps: [],
       };
 
+      //add creeps to array;
       for (var myCreep in creepList) {
         //creep template, or 'creepLate' eh?
         let creepLate = {
