@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function GeneralPurposeUnit() {
+module.exports = {
 
-  this.spawn = function(spawnBase, spawnRole) {
+  spawn: function(spawnBase, spawnRole) {
     var model = {
       model: 'GPU',
       role: spawnRole,
@@ -12,13 +12,14 @@ module.exports = function GeneralPurposeUnit() {
     console.log(`Spawning new GeneralPurposeUnit at: ${spawnBase};
                 New GPU name: ${newName};
                 New GPU role: ${spawnRole}` );
-  };
+  },
 
-  this.harvester = function(creep) {
+  harvester: function(creep) {
     if(creep.carry.energy < creep.carryCapacity) {
       var sources = creep.room.find(FIND_SOURCES);
       if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
         creep.moveTo(sources[0]);
+        creep.say('Harvesting, for God!');
       }
     }
     else {
@@ -36,16 +37,16 @@ module.exports = function GeneralPurposeUnit() {
         }
       }
     }
-  };
+  },
 
-  this.upgrader = function(creep) {
+  upgrader: function(creep) {
     if(creep.memory.upgrading && creep.carry.energy == 0) {
       creep.memory.upgrading = false;
-      creep.say('harvesting');
+      creep.say('Harvesting, for God!');
     }
     if(!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
       creep.memory.upgrading = true;
-      creep.say('upgrading');
+      creep.say('Upgrading, praise God!');
     }
 
     if(creep.memory.upgrading) {
@@ -59,16 +60,16 @@ module.exports = function GeneralPurposeUnit() {
         creep.moveTo(sources[0]);
       }
     }
-  };
+  },
 
-  this.builder = function(creep) {
+  builder: function(creep) {
     if(creep.memory.building && creep.carry.energy == 0) {
       creep.memory.building = false;
-      creep.say('harvesting');
+      creep.say('Harvesting, for God!');
     }
     if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
       creep.memory.building = true;
-      creep.say('building');
+      creep.say('Building, glory to God!');
     }
 
     if(creep.memory.building) {
@@ -85,5 +86,5 @@ module.exports = function GeneralPurposeUnit() {
         creep.moveTo(sources[0]);
       }
     }
-  };
+  },
 };

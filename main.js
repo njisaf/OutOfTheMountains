@@ -13,6 +13,8 @@ module.exports.loop = function() {
     }
   }
 
+  //loop over linked list, update info;
+
   //execute roles for all creeps
   for(var creepName in Game.creeps) {
     var creep = Game.creeps[creepName];
