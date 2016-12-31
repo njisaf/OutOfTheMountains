@@ -2,9 +2,16 @@
 
 module.exports = function GeneralPurposeUnit() {
 
-  this.spawn = function(role) {
-    var newName = Game.spawns['The Base'].createCreep([WORK, CARRY, MOVE], undefined, {model: 'GPU', role: role});
-    console.log('Spawning new GeneralPurposeUnit: ' + newName + '; Role is set to: ' + role);
+  this.spawn = function(spawnBase, spawnRole) {
+    var model = {
+      model: 'GPU',
+      role: spawnRole,
+      base: spawnBase,
+    };
+    var newName = Game.spawns[spawnBase].createCreep([WORK, CARRY, MOVE], undefined, model);
+    console.log(`Spawning new GeneralPurposeUnit at: ${spawnBase};
+                New GPU name: ${newName};
+                New GPU role: ${spawnRole}` );
   };
 
   this.harvester = function(creep) {
