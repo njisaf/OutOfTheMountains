@@ -24,6 +24,36 @@ module.exports = function LinkedList() {
       }
       current.next = node;
     }
+    ++length;
   };
+
+  this.insertAt = function(position, element) {
+    if(position < 0 || position > length) {
+      console.log('Position is out of bounds;');
+      return false;
+    }
+
+    var node = new Node(element);
+    var current = head;
+    var previous = null;
+    var index = 0;
+
+    if(position === 0) {
+      console.log('Inserting new node at head. Previous head will be next node;');
+      node.next = current;
+      head = node;
+    } else {
+      while(++index < position) {
+        previous = current;
+        current = current.next;
+      }
+      node.next = current;
+      previous.next = node;
+    }
+    ++length;
+    return true;
+  };
+
+
 
 };
