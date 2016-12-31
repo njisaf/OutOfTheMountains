@@ -35,12 +35,12 @@ module.exports.loop = function() {
       //build structure objects from list;
       let myStructuresObj = {};
 
-      for (var struct in structListMine) {
+      for (var i = 0; i < structListMine.length; ++i) {
         let structLate = {
-          position: struct.pos,
-          id: struct.id,
+          position: structListMine[i].pos,
+          id: structListMine[i].id,
         };
-        myStructuresObj[struct.structureType] = structLate;
+        myStructuresObj[structListMine[i].structureType] = structLate;
       }
 
       //template for room;
