@@ -15,7 +15,7 @@ module.exports = {
   },
 
   harvester: function(creep) {
-    console.log('Harvester hit');
+    console.log('Harvester hit;');
     if(creep.carry.energy < creep.carryCapacity) {
       var sources = creep.room.find(FIND_SOURCES);
       if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
@@ -40,9 +40,12 @@ module.exports = {
         }
       }
     }
+    creep.memory.role = 'builder';
+    this.builder(creep);
   },
 
   upgrader: function(creep) {
+    console.log('Upgrader hit;');
     if(creep.memory.upgrading && creep.carry.energy == 0) {
       creep.memory.upgrading = false;
       creep.say('Harvesting, for God!');
@@ -66,6 +69,7 @@ module.exports = {
   },
 
   builder: function(creep) {
+    console.log('Builder hit;');
     if(creep.memory.building && creep.carry.energy == 0) {
       creep.memory.building = false;
       creep.say('Harvesting, for God!');
@@ -89,5 +93,7 @@ module.exports = {
         creep.moveTo(sources[0]);
       }
     }
+    creep.memory.role = 'upgrader';
+    this.upgrader(creep);
   },
 };
