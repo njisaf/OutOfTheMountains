@@ -18,15 +18,21 @@ module.exports.loop = function() {
   //execute roles for all creeps
   for(var creepName in Game.creeps) {
     var creep = Game.creeps[creepName];
-    if(creep.memory.role === 'harvester') {
-      GPU.harvester(creep);
+
+    if(creep.memory.model === 'GPU') {
+      if(creep.memory.role === 'harvester') {
+        GPU.harvester(creep);
+      }
+      if(creep.memory.role === 'upgrader') {
+        GPU.upgrader(creep);
+      }
+      if(creep.memory.role === 'builder') {
+        GPU.builder(creep);
+      }
     }
-    if(creep.memory.role === 'upgrader') {
-      GPU.upgrader(creep);
-    }
-    if(creep.memory.role === 'builder') {
-      GPU.builder(creep);
-    }
+
   }
 
 };
+
+// Game.spawns['The Base'].createCreep([WORK, CARRY, MOVE], undefined, {model: 'GPU', role: 'harvester', base: 'The Base'});
