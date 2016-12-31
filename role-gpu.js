@@ -19,6 +19,7 @@ module.exports = {
       var sources = creep.room.find(FIND_SOURCES);
       if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
         creep.moveTo(sources[0]);
+        creep.say('Harvesting, for God!');
       }
     }
     else {
@@ -41,11 +42,11 @@ module.exports = {
   upgrader: function(creep) {
     if(creep.memory.upgrading && creep.carry.energy == 0) {
       creep.memory.upgrading = false;
-      creep.say('harvesting');
+      creep.say('Harvesting, for God!');
     }
     if(!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
       creep.memory.upgrading = true;
-      creep.say('upgrading');
+      creep.say('Upgrading, praise God!');
     }
 
     if(creep.memory.upgrading) {
@@ -64,11 +65,11 @@ module.exports = {
   builder: function(creep) {
     if(creep.memory.building && creep.carry.energy == 0) {
       creep.memory.building = false;
-      creep.say('harvesting');
+      creep.say('Harvesting, for God!');
     }
     if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
       creep.memory.building = true;
-      creep.say('building');
+      creep.say('Building, glory to God!');
     }
 
     if(creep.memory.building) {
