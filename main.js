@@ -17,7 +17,7 @@ module.exports.loop = function() {
 
   if(!Memory.dataList) {
     //create list;
-    let dataList = new LL();
+    Memory.dataList = new LL();
 
     //loop over list of all rooms and create a node for each on dataList;
 
@@ -46,13 +46,12 @@ module.exports.loop = function() {
           base: Game.creeps[myCreep].base,
         };
 
-        newRoom.creeps.append(creepLate);
+        newRoom.myCreeps.append(creepLate);
       }
       //stick the room template on dataList
-      dataList.append(newRoom);
+      console.log('newRoom: ', newRoom);
+      Memory.dataList.append(newRoom);
     }
-    //stick dataList in memory;
-    Memory.dataList = dataList;
   }
 
   //execute roles for all creeps
