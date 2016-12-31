@@ -15,12 +15,12 @@ module.exports = {
   },
 
   harvester: function(creep) {
-    console.log('Harvester hit;');
+    // console.log('Harvester hit;');
     if(creep.carry.energy < creep.carryCapacity) {
       var sources = creep.room.find(FIND_SOURCES);
       if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
         // creep.say('Harvesting, for God!');
-        console.log('harvesting');
+        // console.log('harvesting');
         creep.moveTo(sources[0]);
       }
     }
@@ -35,7 +35,7 @@ module.exports = {
       console.log('role-harvester has detected targets: ', targets);
       if(targets.length > 0) {
         if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          console.log('depositing');
+          // console.log('depositing');
           creep.moveTo(targets[0]);
         }
       }
@@ -43,7 +43,7 @@ module.exports = {
   },
 
   upgrader: function(creep) {
-    console.log('Upgrader hit;');
+    // console.log('Upgrader hit;');
     if(creep.memory.upgrading && creep.carry.energy == 0) {
       creep.memory.upgrading = false;
       creep.say('Harvesting, for God!');
@@ -67,7 +67,7 @@ module.exports = {
   },
 
   builder: function(creep) {
-    console.log('Builder hit;');
+    // console.log('Builder hit;');
     if(creep.memory.building && creep.carry.energy == 0) {
       creep.memory.building = false;
       creep.say('Harvesting, for God!');
