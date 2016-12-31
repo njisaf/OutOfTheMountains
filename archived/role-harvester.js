@@ -13,7 +13,7 @@ module.exports = {
     console.log('Harvesters count now: ', this.count);
 
     if(this.count < dataCreepCount.harvester) {
-      var newName = Game.spawns['The Base'].createCreep([WORK, CARRY, MOVE, MOVE], undefined, {role: 'harvester'});
+      var newName = Game.spawns['The Base'].createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], undefined, {role: 'harvester'});
       console.log('Spawning new harvester: ', newName);
     }
   },
@@ -38,9 +38,12 @@ module.exports = {
         if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           creep.moveTo(targets[0]);
         } else if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_FULL) {
-          creep.moveTo(targets[0]);
+          creep.memory.role = 'upgrader';
+          console.log('Target is full! Creep is now: ', creep.memory.role);
         }
       }
     }
+    creep.memory.role = 'upgrader';
+    console.log('Target is full! Creep is now: ', creep.memory.role);
   },
 };
