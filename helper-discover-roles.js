@@ -21,10 +21,10 @@ module.exports = function() {
     //okay, that works. now, if there are five, and if energy is at capacity, switch to building;
     //switch by finding number of creeps, pushing that number of roles to an array, then we'll send it to the other helper;
     if(Memory.creepsByRoom[room].gpuNameArray.length >= 5 && Game.rooms[room].energyAvailable === 300) {
-      let roleArray = [];
-      roleArray.fill('builder', 0, Memory.creepsByRoom[room].gpuNameArray.length);
+      let roleArray = new Array.from('upgrader'.repeat(Memory.creepsByRoom[room].gpuNameArray.length));
+      // roleArray.fill('builder', 0, Memory.creepsByRoom[room].gpuNameArray.length);
       console.log('roleArray: ', roleArray);
-      assignRoles(room, roleArray);
+      // assignRoles(room, roleArray);
     }
 
   }
