@@ -7,7 +7,7 @@ module.exports = function(nameArray, roleArray) {
   }
 
   for (var i = 0; i < nameArray.length; ++i) {
-    Game.creeps[i].memory.role = roleArray[i];
+    Game.creeps[nameArray[i]].memory.role = roleArray[i];
   }
 
 };
