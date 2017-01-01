@@ -3,6 +3,7 @@
 module.exports = {
 
   generate: function() {
+    console.log('Generating dataList');
     //create list;
     let dataList = {
       myRooms: {},
@@ -57,7 +58,7 @@ module.exports = {
   },
 
   update: function() {
-    console.log('Hello I am working');
+    this.generate();
   },
 
 };
