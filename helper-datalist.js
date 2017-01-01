@@ -3,7 +3,7 @@
 module.exports = {
 
   generate: function() {
-    console.log('Generating dataList');
+    // console.log('Generating dataList');
     //create list;
     let dataList = {
       myRooms: {},
@@ -52,7 +52,7 @@ module.exports = {
       }
 
       //stick the room template on dataList
-      console.log('newRoom: ', newRoom);
+      // console.log('newRoom: ', newRoom);
       Memory.dataList.myRooms[room] = newRoom;
     }
   },
