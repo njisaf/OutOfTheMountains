@@ -2,18 +2,6 @@
 
 module.exports = {
 
-  spawn: function(spawnBase, spawnRole) {
-    var model = {
-      model: 'GPU',
-      role: spawnRole,
-      base: spawnBase,
-    };
-    var newName = Game.spawns[spawnBase].createCreep([WORK, CARRY, MOVE], undefined, model);
-    console.log(`Spawning new GeneralPurposeUnit at: ${spawnBase};
-                New GPU name: ${newName};
-                New GPU role: ${spawnRole}` );
-  },
-
   harvester: function(creep) {
     // console.log('Harvester hit;');
     if(creep.carry.energy < creep.carryCapacity) {

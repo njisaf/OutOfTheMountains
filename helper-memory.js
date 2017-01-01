@@ -1,5 +1,7 @@
 'use strict';
 
+// const helperTribes = require('helper-tribes');
+
 module.exports = {
 
   update: function() {
@@ -16,6 +18,7 @@ module.exports = {
 
       let newRoom = {
         gpuNameArray: [],
+        tribeArray: [],
         gpuRoles: {},
       };
 
