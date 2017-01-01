@@ -24,6 +24,7 @@
     "FIND_HOSTILE_CREEPS": true,
     "FIND_STRUCTURES": true,
     "FIND_MY_STRUCTURES": true,
+    "FIND_MY_SPAWNS": true,
     "FIND_HOSTILE_STRUCTURES": true,
     "FIND_CONSTRUCTION_SITES": true,
     "ERR_NOT_IN_RANGE": true,
