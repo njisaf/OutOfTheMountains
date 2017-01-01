@@ -1,7 +1,7 @@
 'use strict';
 
 const helperMemory = require('helper-memory');
-const helperDiscoverRoles = require('helper-discover-roles');
+const discoverRoles = require('helper-discover-roles');
 
 const modelGPU = require('model-gpu');
 
@@ -19,7 +19,7 @@ module.exports.loop = function() {
   helperMemory.update();
 
   //update tribeArray on room Memory objects.
-  helperDiscoverRoles();
+  discoverRoles();
 
   //reassign roles based on tribe array;
 
