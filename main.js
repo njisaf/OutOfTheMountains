@@ -1,8 +1,10 @@
 'use strict';
 
-const data = require('helper-data');
+const helperMemory = require('helper-memory');
+const helperDiscoverRoles = require('helper-discover-roles');
+const helperAssignRoles = require('helper-assign-roles');
 
-const GPU = require('role-gpu');
+const modelGPU = require('model-gpu');
 
 module.exports.loop = function() {
 
@@ -15,7 +17,11 @@ module.exports.loop = function() {
   }
 
   //update data pulls;
-  data.update();
+  helperMemory.update();
+
+  //update tribeArray on room Memory objects.
+
+  //reassign roles based on tribe array;
 
   //execute roles for all creeps
   for(var creepName in Game.creeps) {
@@ -23,13 +29,13 @@ module.exports.loop = function() {
 
     if(creep.memory.model === 'GPU') {
       if(creep.memory.role === 'harvester') {
-        GPU.harvester(creep);
+        modelGPU.harvester(creep);
       }
       if(creep.memory.role === 'upgrader') {
-        GPU.upgrader(creep);
+        modelGPU.upgrader(creep);
       }
       if(creep.memory.role === 'builder') {
-        GPU.builder(creep);
+        modelGPU.builder(creep);
       }
     }
 
