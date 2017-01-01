@@ -1,8 +1,8 @@
 'use strict';
 
-// const LL = require('data-linked-list');
-const GPU = require('role-gpu');
 const dataList = require('helper-datalist');
+
+const GPU = require('role-gpu');
 
 module.exports.loop = function() {
 
@@ -14,10 +14,11 @@ module.exports.loop = function() {
     }
   }
 
-  //detect if there is a linked list in memory, and if not create one containing all rooms.
+  //detect if there is a datalist in memory, and if not create one containing all rooms.
   if(!Memory.dataList) {
     dataList.generate();
   } else {
+    //TESTING: update is currently just generating a new datalist, what will this do?
     dataList.update();
   }
 

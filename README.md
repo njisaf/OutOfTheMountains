@@ -5,7 +5,7 @@
 * Move full harvesters away from energy source before they detect where to go;
 * Work out how to upgrade walls;
 
-# Linked List
+## dataList
 
-* Create a linked list that stores all rooms occupied;
-* Create a property on the list node that contains a linked list of all creeps associated with that room;
+* create roles as categories in rooms;
+* loop over these categories, grab the name, execute role based on that;
