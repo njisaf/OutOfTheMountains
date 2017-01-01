@@ -3,23 +3,29 @@
 module.exports = {
 
   update: function() {
-    this.dataList();
+    this.creepsByRoom();
   },
 
   creepsByRoom: function() {
 
     Memory.creepsByRoom = {};
 
+    //grab all friendly creeps in each friendly room.
     for (var room in Game.rooms) {
       let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
 
       let newRoom = {
-        gpuCount: creepList.length,
         gpuNameArray: [],
+        gpuRoles: {},
       };
 
+      //loop over list, find GPUs, push to name array and role object;
       for (var i = 0; i < creepList.length; ++i) {
-        newRoom.gpuNameArray.push(creepList[i].name);
+        let name = creepList[i].name;
+        if(Game.creeps[name].memory.model === 'GPU') {
+          newRoom.gpuNameArray.push(name);
+          newRoom.gpuRoles[name] = Game.creeps[name].memory.role;
+        }
       }
 
       Memory.creepsByRoom[room] = newRoom;

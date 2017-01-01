@@ -1,6 +1,6 @@
 'use strict';
 
-const dataList = require('helper-datalist');
+const data = require('helper-data');
 
 const GPU = require('role-gpu');
 
@@ -14,13 +14,8 @@ module.exports.loop = function() {
     }
   }
 
-  //detect if there is a datalist in memory, and if not create one containing all rooms.
-  if(!Memory.dataList) {
-    dataList.generate();
-  } else {
-    //TESTING: update is currently just generating a new datalist, what will this do?
-    dataList.update();
-  }
+  //update data pulls;
+  data.update();
 
   //execute roles for all creeps
   for(var creepName in Game.creeps) {
