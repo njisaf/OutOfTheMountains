@@ -32,7 +32,7 @@ module.exports = {
             structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
         },
       });
-      console.log('role-harvester has detected targets: ', targets);
+      // console.log('role-harvester has detected targets: ', targets);
       if(targets.length > 0) {
         if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
           // console.log('depositing');

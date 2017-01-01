@@ -2,7 +2,32 @@
 
 module.exports = {
 
-  generate: function() {
+  update: function() {
+    this.dataList();
+  },
+
+  creepsByRoom: function() {
+
+    Memory.creepsByRoom = {};
+
+    for (var room in Game.rooms) {
+      let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+
+      let newRoom = {
+        gpuCount: creepList.length,
+        gpuNameArray: [],
+      };
+
+      for (var i = 0; i < creepList.length; ++i) {
+        newRoom.gpuNameArray.push(creepList[i].name);
+      }
+
+      Memory.creepsByRoom[room] = newRoom;
+    }
+
+  },
+
+  dataList: function() {
     // console.log('Generating dataList');
     //create list;
     let dataList = {
@@ -57,8 +82,5 @@ module.exports = {
     }
   },
 
-  update: function() {
-    this.generate();
-  },
 
 };
