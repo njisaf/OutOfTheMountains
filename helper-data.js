@@ -2,7 +2,38 @@
 
 module.exports = {
 
-  generate: function() {
+  update: function() {
+    this.creepsByRoom();
+  },
+
+  creepsByRoom: function() {
+
+    Memory.creepsByRoom = {};
+
+    //grab all friendly creeps in each friendly room.
+    for (var room in Game.rooms) {
+      let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+
+      let newRoom = {
+        gpuNameArray: [],
+        gpuRoles: {},
+      };
+
+      //loop over list, find GPUs, push to name array and role object;
+      for (var i = 0; i < creepList.length; ++i) {
+        let name = creepList[i].name;
+        if(Game.creeps[name].memory.model === 'GPU') {
+          newRoom.gpuNameArray.push(name);
+          newRoom.gpuRoles[name] = Game.creeps[name].memory.role;
+        }
+      }
+
+      Memory.creepsByRoom[room] = newRoom;
+    }
+
+  },
+
+  dataList: function() {
     // console.log('Generating dataList');
     //create list;
     let dataList = {
@@ -57,8 +88,5 @@ module.exports = {
     }
   },
 
-  update: function() {
-    this.generate();
-  },
 
 };

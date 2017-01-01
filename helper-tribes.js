@@ -2,6 +2,12 @@
 
 module.exports = {
 
-  
+  baseBuilders: function() {
+    let tribe = {
+      role
+    }
+
+
+  },
 
 };
