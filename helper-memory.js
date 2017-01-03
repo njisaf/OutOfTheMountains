@@ -15,8 +15,10 @@ module.exports = {
     //grab all friendly creeps in each friendly room.
     for (var room in Game.rooms) {
       let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+      let constructionSitesList = Game.rooms[room].find(FIND_CONSTRUCTION_SITES);
 
       let newRoom = {
+        constructionSites: constructionSitesList,
         gpuNameArray: [],
         tribeArray: [],
         gpuRoles: {},
