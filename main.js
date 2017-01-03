@@ -1,22 +1,14 @@
 'use strict';
 
-const helperMemory = require('helper-memory');
+const buildMemory = require('helper-build-memory');
 const discoverRoles = require('helper-discover-roles');
 
 const modelGPU = require('model-gpu');
 
 module.exports.loop = function() {
 
-  //clear dead creeps from memory
-  for(var name in Memory.creeps) {
-    if(!Game.creeps[name]) {
-      delete Memory.creeps[name];
-      console.log('Clearing non-existing creep memory: ', name);
-    }
-  }
-
   //update data pulls;
-  helperMemory.update();
+  buildMemory.update();
 
   //update tribeArray on room Memory objects.
   discoverRoles();
