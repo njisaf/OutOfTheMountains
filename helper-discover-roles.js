@@ -5,13 +5,11 @@ const assignRoles = require('helper-assign-roles');
 
 module.exports = function() {
 
-  //okay, let's start basic. If there are fewer than 5 GPUs, spawn a new GPU and assign them to harvesters
-  //we want five GPUs as quick as possible. I'll need to stick this number somewhere else eventually;
-  //for now also let's do this only if we have full energy.
+  //I probably want to set a bunch of toggles somewhere in Memory, and then we check the conditions on the front. Let's do that next, seems easy. Rejigger memory
   for (var room in Memory.creepsByRoom) {
 
     let gpuNameArray = Memory.creepsByRoom[room].gpuNameArray;
-
+    let constructionSites = Memory.creepsByRoom[room].constructionSites;
     //basic setup, get to five GPUs.
     if(gpuNameArray.length < 5
       && Game.rooms[room].energyAvailable === 300) {
@@ -20,12 +18,16 @@ module.exports = function() {
       spawnCreep(spawn[0].name, 'GPU', 'harvester', [WORK, CARRY, MOVE]);
     }
 
-    //okay, that works. now, if there are five, and if energy is at capacity, switch to building;
-    //switch by finding number of creeps, pushing that number of roles to an array, then we'll send it to the other helper;
-    if(gpuNameArray.length >= 5 && Game.rooms[room].energyAvailable === 300) {
-
+    if (gpuNameArray.length >= 5 && Game.rooms[room].energyAvailable === 300 && constructionSites.length) {
 
       let roleArray = new Array(gpuNameArray.length).fill('builder');
+      // console.log('roleArray: ', roleArray);
+      assignRoles(gpuNameArray, roleArray);
+    }
+
+    if (gpuNameArray.length >= 5 && Game.rooms[room].energyAvailable === 300 && !constructionSites.length) {
+
+      let roleArray = new Array(gpuNameArray.length).fill('upgrader');
       // console.log('roleArray: ', roleArray);
       assignRoles(gpuNameArray, roleArray);
     }
