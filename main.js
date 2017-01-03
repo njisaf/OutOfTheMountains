@@ -8,7 +8,10 @@ const modelGPU = require('model-gpu');
 module.exports.loop = function() {
 
   //update data pulls;
-  buildMemory.update();
+  buildMemory.scaffold();
+  buildMemory.globalToggles();
+  buildMemory.clausewitz();
+  buildMemory.clean();
 
   //update tribeArray on room Memory objects.
   discoverRoles();
