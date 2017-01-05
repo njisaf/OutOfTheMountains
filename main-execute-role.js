@@ -11,7 +11,7 @@ module.exports = function(creep) {
   let roleOrder = require('role-' + role);
   console.log('roleOrder: ', roleOrder);
 
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     try {
       resolve(roleOrder.run());
     } catch (e) {

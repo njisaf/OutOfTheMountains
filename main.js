@@ -1,5 +1,6 @@
 'use strict';
 
+const getRoomEnergy = require('main-get-room-energy');
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
 
@@ -8,14 +9,21 @@ const cleanAll = require('main-clean-all');
 
 module.exports.loop = function() {
 
-  for (var room in Game.rooms) {
+  for (var roomName in Game.rooms) {
     //loop over rooms, determine what state they are in and set them to be in setup or whatever.
+    let room = Game.rooms[roomName];
+
+    Promise.all([
+      getRoomEnergy(),
+      getRoomEnergyCapacity(),
+      
+    ])
 
   }
 
-  for (var name in Game.creeps) {
+  for (var creepName in Game.creeps) {
 
-    let creep = Game.creeps[name];
+    let creep = Game.creeps[creepName];
 
     executeRole(creep)
     .then()
