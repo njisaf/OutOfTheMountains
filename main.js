@@ -1,6 +1,8 @@
 'use strict';
 
+const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
+
 
 // in loop, we put everything that needs to be done every tick. Simple as that. If we need it to do anything else we'll build another set of functions;
 
@@ -11,10 +13,26 @@ module.exports.loop = function() {
 
   }
 
-  for (var creep in Game.creeps) {
-    //loop over all creeps and execute their roles. Their roles should be literally the function name. It think I can do that with like .eval() right?
+  for (var name in Game.creeps) {
+
+    let creep = Game.creeps[name];
+
+    executeRole(creep)
+    .then()
+    .catch();
 
   }
+
+    // if(creep.memory.role === 'setupHarvester') {
+    //   roleSetupHarvester.run(creep);
+    // }
+    // if(creep.memory.role === 'setup-upgrader') {
+    //   roleSetupUpgrader.run(creep);
+    // }
+    // if(creep.memory.role === 'setup-builder') {
+    //   roleSetupBuilder.run(creep);
+    // }
+
 
   cleanAll();
 
