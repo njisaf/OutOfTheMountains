@@ -2,13 +2,6 @@
 
 module.exports = {
 
-  update: function() {
-    this.scaffold();
-    this.globalToggles();
-    this.commander();
-    this.clean();
-  },
-
   scaffold: function() {
     //scaffold checks to see if certain memory structures exist and creates them; for now, this is for bugfixing while we stumble forward; pretty sure it's not necessary, the update functions should just create the objects as they go if they aren't there.
 
@@ -16,8 +9,8 @@ module.exports = {
       Memory.globalToggles = {};
     }
 
-    if (!Memory.roomToggles) {
-      Memory.roomToggles = {};
+    if (!Memory.rooms) {
+      Memory.rooms = Game.rooms;
     }
 
   },
@@ -30,17 +23,24 @@ module.exports = {
 
   },
 
-  roomToggles: function() {
+  rooms: function() {
 
     //these set conditional toggles for individual rooms, which subsequent functions act upon to dictate creep roles within the room;
 
     //grab all friendly creeps in each friendly room.
     for (var room in Game.rooms) {
       let creepList = Game.rooms[room].find(FIND_MY_CREEPS);
-      let constructionSitesList = Game.rooms[room].find(FIND_CONSTRUCTION_SITES);
+      let constructionSites = Game.rooms[room].find(FIND_CONSTRUCTION_SITES);
+      let energyAvailable = Game.rooms[room].energyAvailable;
+      let energyCapacityAvailable = Game.rooms[room].energyCapacityAvailable;
+      let controller = Game.rooms[room].controller;
 
       let newRoom = {
-        constructionSites: constructionSitesList,
+        toggles: {},
+        controller,
+        energyAvailable,
+        energyCapacityAvailable,
+        constructionSites,
         gpuNameArray: [],
         gpuRoles: {},
       };
@@ -54,7 +54,7 @@ module.exports = {
         }
       }
 
-      Memory.creepsByRoom[room] = newRoom;
+      Memory.rooms[room] = newRoom;
     }
 
   },

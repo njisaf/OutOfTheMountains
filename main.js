@@ -1,7 +1,7 @@
 'use strict';
 
-const buildMemory = require('helper-build-memory');
-const discoverRoles = require('helper-discover-roles');
+const buildMemory = require('main-build-memory');
+const setCreepRoles = require('main-set-creep-roles');
 
 const modelGPU = require('model-gpu');
 
@@ -10,11 +10,11 @@ module.exports.loop = function() {
   //update data pulls;
   buildMemory.scaffold();
   buildMemory.globalToggles();
-  buildMemory.clausewitz();
+  buildMemory.rooms();
   buildMemory.clean();
 
   //update tribeArray on room Memory objects.
-  discoverRoles();
+  setCreepRoles();
 
   //reassign roles based on tribe array;
 
