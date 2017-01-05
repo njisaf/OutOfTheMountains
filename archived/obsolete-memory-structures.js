@@ -1,12 +1,6 @@
 'use strict';
 
-// const helperTribes = require('helper-tribes');
-
 module.exports = {
-
-  update: function() {
-    this.creepsByRoom();
-  },
 
   creepsByRoom: function() {
 
@@ -92,6 +86,5 @@ module.exports = {
       Memory.dataList.myRooms[room] = newRoom;
     }
   },
-
 
 };

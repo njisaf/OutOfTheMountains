@@ -1,46 +1,14 @@
 'use strict';
 
-const helperMemory = require('helper-memory');
-const discoverRoles = require('helper-discover-roles');
-
-const modelGPU = require('model-gpu');
-
 module.exports.loop = function() {
 
-  //clear dead creeps from memory
-  for(var name in Memory.creeps) {
-    if(!Game.creeps[name]) {
-      delete Memory.creeps[name];
-      console.log('Clearing non-existing creep memory: ', name);
-    }
+  for (var room in Game.rooms) {
+    //loop over rooms, determine what state they are in and set them to be in setup or whatever.
   }
 
-  //update data pulls;
-  helperMemory.update();
-
-  //update tribeArray on room Memory objects.
-  discoverRoles();
-
-  //reassign roles based on tribe array;
-
-  //execute roles for all creeps
-  for(var creepName in Game.creeps) {
-    var creep = Game.creeps[creepName];
-
-    if(creep.memory.model === 'GPU') {
-      if(creep.memory.role === 'harvester') {
-        modelGPU.harvester(creep);
-      }
-      if(creep.memory.role === 'upgrader') {
-        modelGPU.upgrader(creep);
-      }
-      if(creep.memory.role === 'builder') {
-        modelGPU.builder(creep);
-      }
-    }
+  for (var creep in Game.creeps) {
+    //loop over all creeps and execute their roles. Their roles should be literally the function name. It think I can do that with like .eval() right?
 
   }
 
 };
-
-// Game.spawns['The Base'].createCreep([WORK, CARRY, MOVE], undefined, {model: 'GPU', role: 'harvester', base: 'The Base'});
