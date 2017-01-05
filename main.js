@@ -1,6 +1,8 @@
 'use strict';
 
-const getRoomEnergy = require('main-get-room-energy');
+const energyAvailable = require('main-get-room-energyavailable');
+const energyCapacityAvailable = require('main-get-room-energycapacity');
+
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
 
@@ -14,10 +16,13 @@ module.exports.loop = function() {
     let room = Game.rooms[roomName];
 
     Promise.all([
-      getRoomEnergy(),
-      getRoomEnergyCapacity(),
-      
+      energyAvailable(room),
+      energyCapacityAvailable(room),
     ])
+    .then(values => {
+      console.log('room values: ', values);
+    })
+    .catch(err => console.log(err));
 
   }
 
@@ -30,16 +35,6 @@ module.exports.loop = function() {
     .catch();
 
   }
-
-    // if(creep.memory.role === 'setupHarvester') {
-    //   roleSetupHarvester.run(creep);
-    // }
-    // if(creep.memory.role === 'setup-upgrader') {
-    //   roleSetupUpgrader.run(creep);
-    // }
-    // if(creep.memory.role === 'setup-builder') {
-    //   roleSetupBuilder.run(creep);
-    // }
 
 
   cleanAll();

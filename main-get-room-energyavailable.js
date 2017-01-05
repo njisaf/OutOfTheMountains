@@ -1,5 +1,7 @@
 'use strict';
 
+//energyAvailable per room
+
 module.exports = function(room) {
 
   return new Promise((resolve, reject) => {
