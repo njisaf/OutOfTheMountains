@@ -9,7 +9,9 @@ module.exports = function(room) {
     let energyCapacityAvailable = Game.rooms[room].energyCapacityAvailable;
 
     if(energyCapacityAvailable) {
-      resolve(energyCapacityAvailable);
+      resolve({
+        energyCapacityAvailable,
+      });
     } else {
       reject('!!! energyCapacityAvailable has failed. energyCapacityAvailable: ' + energyCapacityAvailable);
     }
