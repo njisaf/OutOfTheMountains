@@ -5,20 +5,14 @@
 
 module.exports = function(creep) {
 
-
-
   let role = creep.memory.role;
   let roleOrder = require('role-' + role);
   console.log('roleOrder: ', roleOrder);
 
-  return new Promise((resolve, reject) => {
-    try {
-      resolve(roleOrder.run(creep));
-    } catch (e) {
-      reject(e);
-    }
-
-  });
-
+  if (typeof roleOrder.run === 'function') {
+    roleOrder.run(creep);
+  } else {
+    console.log('!!! roleOrder.run() is not a function for creep: ', creep);
+  }
 
 };
