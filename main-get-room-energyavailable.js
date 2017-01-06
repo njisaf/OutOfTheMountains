@@ -8,13 +8,13 @@ module.exports = function(room) {
     //no better way to do this, can't hold this in memory;
     let energyAvailable = room.energyAvailable;
 
-    if(energyAvailable) {
-      resolve({
-        energyAvailable,
-      });
-    } else {
-      reject('!!! energyAvailable has failed. energyAvailable: ' + energyAvailable);
+    if(!energyAvailable) {
+      return reject('!!! energyAvailable has failed. energyAvailable: ' + energyAvailable);
     }
+
+    resolve({
+      energyAvailable,
+    });
 
   });
 
