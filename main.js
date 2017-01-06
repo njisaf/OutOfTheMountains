@@ -10,7 +10,8 @@ const setupRatios = {harvester: 50, upgrader: 30, builder: 20};
 
 module.exports.loop = function() {
 
-
+  Memory.globalEnergyAvailable = 0;
+  Memory.globalEnergyCapacityAvailable = 0;
   //build global energy counts;
   for (var roomName in Game.rooms) {
     let room = Game.rooms[roomName];
