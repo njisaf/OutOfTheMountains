@@ -6,7 +6,7 @@ module.exports = function(room) {
 
   return new Promise((resolve, reject) => {
     //no better way to do this, can't hold this in memory;
-    let energyCapacityAvailable = Game.rooms[room].energyCapacityAvailable;
+    let energyCapacityAvailable = room.energyCapacityAvailable;
 
     if(energyCapacityAvailable) {
       resolve({
