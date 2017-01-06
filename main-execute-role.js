@@ -13,7 +13,7 @@ module.exports = function(creep) {
 
   return new Promise((resolve, reject) => {
     try {
-      resolve(roleOrder.run());
+      resolve(roleOrder.run(creep));
     } catch (e) {
       reject(e);
     }
