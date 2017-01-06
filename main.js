@@ -11,14 +11,15 @@ const cleanAll = require('main-clean-all');
 
 module.exports.loop = function() {
 
-//maintain energy
+  //set reports that need to be generated anew each round;
+  let globalEnergy = {};
 
   for (var roomName in Game.rooms) {
     //loop over rooms, determine what state they are in and set them to be in setup or whatever.
-    let globalEnergy = {};
-
     let room = Game.rooms[roomName];
 
+
+    //get global energy levels
     Promise.all([
       energyAvailable(room),
       energyCapacityAvailable(room),
@@ -31,17 +32,19 @@ module.exports.loop = function() {
         let value = Object.keys(values[i]);
 
         for (var key in value) {
-          globalEnergy[value] += value[key];
+          globalEnergy[key] += value[key];
         }
-
-
       }
+      return globalEnergy;
+    })
+    .then(globalEnergy => {
+      Memory.globalEnergy = globalEnergy;
     })
     .catch(err => console.log(err));
 
   }
 
-//execute creeps
+//execute creep roles
 
   for (var creepName in Game.creeps) {
 
