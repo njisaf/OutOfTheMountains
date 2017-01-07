@@ -2,6 +2,7 @@
 
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
+const spawnCreep = require('helper-spawn-creep');
 
 const roomModel = require('datum-room-model');
 
@@ -9,8 +10,8 @@ const roomModel = require('datum-room-model');
 
 module.exports.loop = function() {
 
-  Memory.globalEnergyAvailable = 0;
-  Memory.globalEnergyCapacityAvailable = 0;
+  Memory.datums.globalEnergyAvailable = 0;
+  Memory.datums.globalEnergyCapacityAvailable = 0;
   //build all stats; Do that first. We'll reformat later if we really need to.
   for (var _room in Game.rooms) {
     let room = Game.rooms[_room];
@@ -27,8 +28,9 @@ module.exports.loop = function() {
 
 
     //attach data to rooms
-    let spawnList = room.find(FIND_MY_SPAWNS);
-    room.memory.spawnList = spawnList;
+    //I can just stick shit on here, we're only using it per loop... we don't need to stick it in memory AT ALL;
+    room.spawnList = room.find(FIND_MY_SPAWNS);
+
 
     //check the energy levels, yeah?
     //what we can do for these checks is like scenarios, have an object with properties. Then we for in over the keys, run a function that sets truthy or falsy on the check, and set the value based on that.
@@ -44,7 +46,7 @@ module.exports.loop = function() {
     //etc
 
     //now we loop over the creep count we made earlier. If that creep name matches the name on the model,
-    let determineSpawn = function() {
+    let determineSpawn = function(room) {
       let maxValue = null;
       let maxRole = null;
 
@@ -62,7 +64,15 @@ module.exports.loop = function() {
           maxRole = _role;
         }
       }
+      return maxRole;
     };
+
+    let spawnChoice = determineSpawn(room);
+    console.log('spawnChoice: ', spawnChoice);
+
+    spawnCreep(spawnChoice, room);
+    //okay? LORD, you're hard to please. We can work on queues tomorrow or whatever, JESUS.
+
   }
 
 
