@@ -2,6 +2,8 @@
 
 module.exports = {
 
+  body: [WORK, CARRY, MOVE],
+
   run: function(creep) {
     // console.log('Harvester hit;');
     if(creep.carry.energy < creep.carryCapacity) {

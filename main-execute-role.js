@@ -6,13 +6,13 @@
 module.exports = function(creep) {
 
   let role = creep.memory.role;
-  let roleOrder = require('role-' + role);
-  console.log('roleOrder: ', roleOrder);
+  let roleModule = require('role-' + role);
+  console.log('roleModule: ', roleModule);
 
-  if (typeof roleOrder.run === 'function') {
-    roleOrder.run(creep);
+  if (typeof roleModule.run === 'function') {
+    roleModule.run(creep);
   } else {
-    console.log('!!! roleOrder.run() is not a function for creep: ', creep);
+    console.log('!!! roleModule.run() is not a function for creep: ', creep);
   }
 
 };

@@ -1,18 +1,16 @@
 'use strict';
 
-module.exports = function(role, base, body) {
-  let model = {
+module.exports = function(role, room) {
+  let memory = {
     role: role,
   };
 
-  return new Promise((resolve, reject) => {
+  let body = require('role-' + role).body;
 
-    if (Game.spawns[base].canCreateCreep(body) === 'OK') {
-      let newCreep = Game.spawns[base].createCreep(body, undefined, model);
+  for (var spawn in room.spawnList) {
+    if (Game.spawns[spawn].canCreateCreep(body) === 'OK') {
+      let newCreep = Game.spawns[spawn].createCreep(body, undefined, memory);
+      newCreep.say('I arise, as a new ' + role);
     }
-
-
-  });
-  // console.log(`Spawning new ${spawnRole}!
-              // Spawned at ${spawnBase} with name: ${newName}`);
+  }
 };
