@@ -3,8 +3,7 @@
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
 
-const setupRatios = {harvester: 50, upgrader: 30, builder: 20};
-
+const checkRooms = require('datum-check-rooms');
 
 // in loop, we put everything that needs to be done every tick. Simple as that. If we need it to do anything else we'll build another set of functions;
 
@@ -12,27 +11,32 @@ module.exports.loop = function() {
 
   Memory.globalEnergyAvailable = 0;
   Memory.globalEnergyCapacityAvailable = 0;
-  //build global energy counts;
-  for (var roomName in Game.rooms) {
-    let room = Game.rooms[roomName];
-    Memory.globalEnergyAvailable += room.energyAvailable;
-    Memory.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
+  //build all stats; Do that first. We'll reformat later if we really need to.
+  for (var _room in Game.rooms) {
+    let room = Game.rooms[_room];
+    Memory.datums.globalEnergyAvailable += room.energyAvailable;
+    Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
     //i have no idea how to do this. let's just make it shit out spawns first.
     let creepList = room.find(FIND_MY_CREEPS);
     //get count of all roles of creeps in room;
     for (var _creep in creepList) {
       let role = creepList[_creep].memory.role;
-      room.memory.creepRoleCount[role] += 1;
+      room.memory.datums.creepRoleCount[role] += 1;
     }
 
-    //find the percentages of each role.
-    for (var role in room.memory.creepRoleCount) {
 
-    }
+    //attach data to rooms
+    let spawnList = room.find(FIND_MY_SPAWNS);
+    room.memory.datums.spawnList = spawnList;
 
-    //this doesn't make sense at all. What I should be doing is setting queues or something.
+    //check the energy levels, yeah?
+    //what we can do for these checks is like scenarios, have an object with properties. Then we for in over the keys, run a function that sets truthy or falsy on the check, and set the value based on that.
+
+
   }
+
+
 
 
 

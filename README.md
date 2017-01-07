@@ -4,6 +4,8 @@ I am hungry and there is no food.
 
 I certainly believe that there is an opportunity to consolidate the back-end operations of subscription-based publications like Stratechery; I do question, though, whether this is a venture-worthy business model.
 
+"My father always told me of the troubles that afflicted his father, and that now he was a father he worried that those times would come again. So my father told me, and now that I am a father I see that he was right."
+
 
 ## TODO
 
