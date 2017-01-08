@@ -4,6 +4,11 @@ module.exports = function(_room) {
   let maxValue = null;
   let maxRole = null;
 
+  if (!Memory.rooms[_room].datums.creepRoleCount) {
+    for (var modelRole in Memory.rooms[_room].levelModel.creeps) {
+      Memory.rooms[_room].datums.creepRoleCount[modelRole] = 0;
+    }
+  }
   for (var _role in Memory.rooms[_room].datums.creepRoleCount) {
     console.log('_role: ', _role);
     let remainder = 0;
