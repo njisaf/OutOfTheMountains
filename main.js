@@ -38,6 +38,7 @@ module.exports.loop = function() {
         console.log('_creep', _creep);
         let role = Memory.creeps[_creep].role;
         console.log('role: ', role);
+        Memory.rooms[room].datums.creepRoleCount = {};
         Memory.rooms[room].datums.creepRoleCount[role] = 0;
         Memory.rooms[room].datums.creepRoleCount[role] += 1;
       }
