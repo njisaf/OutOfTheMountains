@@ -5,7 +5,9 @@
 
 module.exports = function(creep) {
 
-  let role = creep.memory.role;
+  console.log('creep executer: ', creep);
+
+  let role = Game.creeps[creep].memory.role;
   let roleModule = require('role-' + role);
   console.log('roleModule: ', roleModule);
 
