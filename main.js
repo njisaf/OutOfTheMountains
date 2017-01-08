@@ -13,6 +13,7 @@ const roomModel = require('datum-room-model');
 module.exports.loop = function() {
 
   Memory.datums = {};
+  Memory.rooms = {};
   Memory.datums.globalEnergyAvailable = 0;
   Memory.datums.globalEnergyCapacityAvailable = 0;
   //build all stats; Do that first. We'll reformat later if we really need to.
