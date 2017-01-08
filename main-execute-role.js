@@ -12,7 +12,7 @@ module.exports = function(creep) {
   console.log('roleModule: ', roleModule);
 
   if (typeof roleModule.run === 'function') {
-    roleModule.run(creep.name);
+    roleModule.run(creep);
   } else {
     console.log('!!! roleModule.run() is not a function for creep: ', creep);
   }
