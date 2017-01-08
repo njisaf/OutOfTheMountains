@@ -11,7 +11,7 @@ module.exports = function(role, _room) {
   for (var i = 0; i < _room.spawnList.length; i++) {
     let spawn = _room.spawnList[i].name;
     console.log('spawn: ', spawn);
-    if (Game.spawns[spawn].canCreateCreep(body) === 'OK') {
+    if (Game.spawns[spawn].canCreateCreep(body) === 0) {
       let newCreep = Game.spawns[spawn].createCreep(body, undefined, memory);
       newCreep.say('I arise, as a new ' + role);
       break;
