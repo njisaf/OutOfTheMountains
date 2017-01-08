@@ -22,6 +22,8 @@ module.exports = function(_room) {
     if (role < match) {
       remainder = role % match;
       console.log('remainder: ', remainder);
+    } else {
+      continue;
     }
     if (remainder > maxValue) {
       remainder = maxValue;
