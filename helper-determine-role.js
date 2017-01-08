@@ -10,13 +10,14 @@ module.exports = function(_room) {
       Memory.rooms[_room].datums.creepRoleCount[modelRole] = 0;
     }
   }
+  
   for (var _role in Memory.rooms[_room].datums.creepRoleCount) {
     console.log('_role: ', _role);
     let remainder = 0;
 
     if (Memory.rooms[_room].datums.creepRoleCount[_role] === 0) {
       console.log(_role + 'in ' + _room + ' is at 0, attempting to spawn immediately;');
-      maxRole = Memory.rooms[_room].datums.creepRoleCount[_role];
+      maxRole = _role;
       break;
     }
 
