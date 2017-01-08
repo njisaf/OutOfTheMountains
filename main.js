@@ -2,6 +2,8 @@
 
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
+
+const determineSpawn = require('helper-determine-spawn');
 const spawnCreep = require('helper-spawn-creep');
 
 const roomModel = require('datum-room-model');
@@ -11,11 +13,13 @@ const roomModel = require('datum-room-model');
 module.exports.loop = function() {
 
   Memory.datums = {};
+  Memory.rooms = {};
   Memory.datums.globalEnergyAvailable = 0;
   Memory.datums.globalEnergyCapacityAvailable = 0;
   //build all stats; Do that first. We'll reformat later if we really need to.
   for (var _room in Game.rooms) {
     let room = Game.rooms[_room];
+    Memory.rooms[room] = room;
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
@@ -26,28 +30,6 @@ module.exports.loop = function() {
 
     //setup levels
     room.memory.levelModel = roomModel[room.controller.level];
-
-    //now we loop over the creep count we made earlier. If that creep name matches the name on the model,
-    let determineSpawn = function(room) {
-      let maxValue = null;
-      let maxRole = null;
-
-      //NOW loop over the model counts
-      for (var _role in room.memory.datums.creepRoleCount) {
-        console.log('_role: ', _role);
-        let remainder = 0;
-        let role = room.memory.datums.creepRoleCount[_role];
-        let match = room.memory.model[_role];
-        if (role < match) {
-          remainder = role % match;
-        }
-        if (remainder > maxValue) {
-          remainder = maxValue;
-          maxRole = _role;
-        }
-      }
-      return maxRole;
-    };
 
     let spawnChoice = determineSpawn(room);
     console.log('spawnChoice: ', spawnChoice);
