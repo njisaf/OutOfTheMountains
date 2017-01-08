@@ -21,7 +21,9 @@ module.exports.loop = function() {
     let room = Game.rooms[_room];
 
     Memory.rooms[room] = {};
-    Memory.rooms[room].datums = {};
+    Memory.rooms[room].datums = {
+      creepRoleCount: {},
+    };
 
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
@@ -30,6 +32,7 @@ module.exports.loop = function() {
     room.spawnList = room.find(FIND_MY_SPAWNS);
 
     for (var _creep in room.creepList) {
+      console.log('_creep', _creep);
       let creep = Game.creeps[_creep];
       let role = room.creepList[creep].memory.role;
       console.log('role: ', role);
