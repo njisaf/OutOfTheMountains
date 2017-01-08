@@ -23,6 +23,7 @@ module.exports.loop = function() {
     //get count of all roles of creeps in room;
     for (var _creep in creepList) {
       let role = creepList[_creep].memory.role;
+      console.log('role', role);
       room.memory.datums.creepRoleCount[role] += 1;
     }
 
