@@ -26,11 +26,21 @@ module.exports.loop = function() {
     Memory.rooms[room] = {};
     Memory.rooms[room].datums = {};
 
+    let level = Game.rooms[room].controller.level;
+    Memory.rooms[room].levelModel = roomModel[level];
+
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
     _room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
     _room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
+
+    if (Memory.rooms[room].levelModel) {
+      Memory.rooms[_room].datums.creepRoleCount = {};
+      for (var modelRole in Memory.rooms[_room].levelModel.maintain) {
+        Memory.rooms[_room].datums.creepRoleCount[modelRole] = 0;
+      }
+    }
 
     if (_room.creepList.length) {
       for (var i = 0; i < _room.creepList.length; i++) {
@@ -38,12 +48,10 @@ module.exports.loop = function() {
         console.log('_creep', _creep);
         let role = Memory.creeps[_creep].role;
         console.log('role: ', role);
-        Memory.rooms[room].datums.creepRoleCount = {};
-        Memory.rooms[room].datums.creepRoleCount[role] = 0;
+        if (!Memory.rooms[room].datums.creepRoleCount[role])
+          Memory.rooms[room].datums.creepRoleCount[role] = 0;
         Memory.rooms[room].datums.creepRoleCount[role] += 1;
       }
-    } else {
-      Memory.rooms[_room].datums.creepRoleCount = 'NOTHING';
     }
       // for (var x in _room.creepList) {
       //   //christ I'm lazy
@@ -54,11 +62,6 @@ module.exports.loop = function() {
       //   Memory.rooms[room].datums.creepRoleCount[role] = 0;
       //   Memory.rooms[room].datums.creepRoleCount[role] += 1;
       // }
-
-
-    //setup levels
-    let level = Game.rooms[room].controller.level;
-    Memory.rooms[room].levelModel = roomModel[level];
 
     let roleChoice = determineRole(room);
     console.log('roleChoice: ', roleChoice);
