@@ -4,7 +4,7 @@ module.exports = function(_room) {
   let maxValue = null;
   let maxRole = null;
 
-  let room = Memory.rooms[_room];
+  let room = Memory.rooms[_room.name];
 
   for (var _role in room.datums.creepRoleCount) {
     console.log('_role: ', _role);

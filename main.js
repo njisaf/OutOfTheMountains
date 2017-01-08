@@ -19,6 +19,12 @@ module.exports.loop = function() {
   //build all stats; Do that first. We'll reformat later if we really need to.
   for (var room in Game.rooms) {
 
+    let _room = {
+      name: room,
+      spawnList: null,
+      creepList: null,
+    };
+
     Memory.rooms[room] = {};
     Memory.rooms[room].datums = {
       creepRoleCount: {},
@@ -27,10 +33,10 @@ module.exports.loop = function() {
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
-    room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
-    room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
+    _room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+    _room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
 
-    for (var _creep in room.creepList) {
+    for (var _creep in _room.creepList) {
       console.log('_creep', _creep);
       let creep = Game.creeps[_creep];
       let role = room.creepList[creep].memory.role;
@@ -42,9 +48,9 @@ module.exports.loop = function() {
     //setup levels
     Memory.rooms[room].levelModel = roomModel[room.controller.level];
 
-    let roleChoice = determineRole(room);
+    let roleChoice = determineRole(_room);
     console.log('roleChoice: ', roleChoice);
-    spawnCreep(roleChoice, room);
+    spawnCreep(roleChoice, _room);
 
   }
 
