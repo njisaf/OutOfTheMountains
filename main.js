@@ -36,9 +36,9 @@ module.exports.loop = function() {
     _room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
 
     if (Memory.rooms[room].levelModel) {
-      Memory.rooms[_room].datums.creepRoleCount = {};
+      Memory.rooms[room].datums.creepRoleCount = {};
       for (var modelRole in Memory.rooms[_room].levelModel.maintain) {
-        Memory.rooms[_room].datums.creepRoleCount[modelRole] = 0;
+        Memory.rooms[room].datums.creepRoleCount[modelRole] = 0;
       }
     }
 
