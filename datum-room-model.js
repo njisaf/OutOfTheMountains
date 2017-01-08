@@ -22,7 +22,7 @@ module.exports = {
   3: {
     maintain: {
       harvester: 1,
-      upgrader: 4,
+      upgrader: 1,
       builder: 3,
     },
     structures: {
@@ -32,7 +32,7 @@ module.exports = {
   4: {
     maintain: {
       harvester: 1,
-      upgrader: 4,
+      upgrader: 1,
       builder: 3,
     },
     structures: {
@@ -42,7 +42,7 @@ module.exports = {
   5: {
     maintain: {
       harvester: 1,
-      upgrader: 4,
+      upgrader: 1,
       builder: 3,
     },
     structures: {
