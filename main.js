@@ -37,7 +37,7 @@ module.exports.loop = function() {
 
     if (Memory.rooms[room].levelModel) {
       Memory.rooms[room].datums.creepRoleCount = {};
-      for (var modelRole in Memory.rooms[_room].levelModel.maintain) {
+      for (var modelRole in Memory.rooms[room].levelModel.maintain) {
         Memory.rooms[room].datums.creepRoleCount[modelRole] = 0;
       }
     }
