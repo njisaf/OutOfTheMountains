@@ -12,8 +12,8 @@ const roomModel = require('datum-room-model');
 
 module.exports.loop = function() {
 
-  Memory.datums = {};
   Memory.rooms = {};
+  Memory.datums = {};
   Memory.datums.globalEnergyAvailable = 0;
   Memory.datums.globalEnergyCapacityAvailable = 0;
   //build all stats; Do that first. We'll reformat later if we really need to.
@@ -29,8 +29,8 @@ module.exports.loop = function() {
     let level = Game.rooms[room].controller.level;
     Memory.rooms[room].levelModel = roomModel[level];
 
-    Memory.datums.globalEnergyAvailable += room.energyAvailable;
-    Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
+    Memory.datums.globalEnergyAvailable += Game.rooms[room].energyAvailable;
+    Memory.datums.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
 
     _room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
     _room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
