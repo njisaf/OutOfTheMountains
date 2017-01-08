@@ -2,16 +2,20 @@
 
 module.exports = {
 
-  setup: {
+  1: {
     creeps: {
       harvester: 1,
       upgrader: 5,
     },
+    structures: null,
   },
-  expand: {
+  2: {
     creeps: {
       harvester: 1,
       upgrader: 5,
+    },
+    structures: {
+      
     },
   },
 

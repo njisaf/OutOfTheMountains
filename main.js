@@ -2,6 +2,8 @@
 
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
+
+const determineSpawn = require('helper-determine-spawn');
 const spawnCreep = require('helper-spawn-creep');
 
 const roomModel = require('datum-room-model');
@@ -10,6 +12,7 @@ const roomModel = require('datum-room-model');
 
 module.exports.loop = function() {
 
+  Memory.datums = {};
   Memory.datums.globalEnergyAvailable = 0;
   Memory.datums.globalEnergyCapacityAvailable = 0;
   //build all stats; Do that first. We'll reformat later if we really need to.
@@ -37,41 +40,16 @@ module.exports.loop = function() {
     //fuck that, just if statements for now. We'll make it more sophisticated later, the point is that they get checked right now. LET'S SPAWN SOMETHING FOR FUCKS SAKE
 
     //setup levels
-    if (room.controller.level === 1) {
-      room.memory.model = roomModel.setup;
-    }
-    if (room.controller.level === 2) {
-      room.memory.model = roomModel.expand;
-    }
-    //etc
-
-    //now we loop over the creep count we made earlier. If that creep name matches the name on the model,
-    let determineSpawn = function(room) {
-      let maxValue = null;
-      let maxRole = null;
-
-      //NOW loop over the model counts
-      for (var _role in room.memory.datums.creepRoleCount) {
-        console.log('_role: ', _role);
-        let remainder = 0;
-        let role = room.memory.datums.creepRoleCount[_role];
-        let match = room.memory.model[_role];
-        if (role < match) {
-          remainder = role % match;
-        }
-        if (remainder > maxValue) {
-          remainder = maxValue;
-          maxRole = _role;
-        }
-      }
-      return maxRole;
-    };
+    //this level model sets the bottom level of activity I think I need to run the rooms.
+    //as soon as these are maintained
+    room.memory.levelModel = roomModel[room.controller.level];
 
     let spawnChoice = determineSpawn(room);
+    //should return a string name for the role; eventually I want it to be an object with the role and the spawn, but I'll need to think about things a bit more than that.
+    //I'll need to look at the spawnlist, basically. then I can do it.
     console.log('spawnChoice: ', spawnChoice);
 
     spawnCreep(spawnChoice, room);
-    //okay? LORD, you're hard to please. We can work on queues tomorrow or whatever, JESUS.
 
   }
 
