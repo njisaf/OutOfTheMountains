@@ -36,7 +36,7 @@ module.exports.loop = function() {
       for (var i = 0; i < _room.creepList.length; i++) {
         let _creep = _room.creepList[i];
         console.log('_creep', _creep);
-        let role = Game.creeps[_creep].memory.role;
+        let role = Memory.creeps[_creep].role;
         console.log('role: ', role);
         Memory.rooms[room].datums.creepRoleCount[role] = 0;
         Memory.rooms[room].datums.creepRoleCount[role] += 1;
