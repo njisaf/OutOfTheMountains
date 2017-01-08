@@ -24,10 +24,15 @@ module.exports.loop = function() {
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
-    //i have no idea how to do this. let's just make it shit out spawns first.
     room.creepList = room.find(FIND_MY_CREEPS);
     room.spawnList = room.find(FIND_MY_SPAWNS);
-    //get count of all roles of creeps in room;
+
+    for (var _creep in room.creepList) {
+      let role = room.creepList[_creep].memory.role;
+      console.log('role: ', role);
+      room.memory.datums.creepRoleCount[role] = 0;
+      room.memory.datums.creepRoleCount[role] += 1;
+    }
 
     //setup levels
     room.memory.levelModel = roomModel[room.controller.level];
