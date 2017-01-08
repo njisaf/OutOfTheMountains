@@ -34,13 +34,14 @@ module.exports.loop = function() {
     _room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
     _room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
 
-    for (var _creep in _room.creepList) {
-      console.log('_creep', _creep);
-      let creep = Game.creeps[_creep];
-      let role = room.creepList[creep].memory.role;
-      console.log('role: ', role);
-      Memory.rooms[room].datums.creepRoleCount[role] = 0;
-      Memory.rooms[room].datums.creepRoleCount[role] += 1;
+    if (_room.creepList.length !== 0) {      
+      for (var _creep in _room.creepList) {
+        console.log('_creep', _creep);
+        let role = Game.creeps[_creep].memory.role;
+        console.log('role: ', role);
+        Memory.rooms[room].datums.creepRoleCount[role] = 0;
+        Memory.rooms[room].datums.creepRoleCount[role] += 1;
+      }
     }
 
     //setup levels

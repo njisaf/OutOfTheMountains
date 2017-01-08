@@ -5,6 +5,7 @@ module.exports = function(_room) {
   let maxRole = null;
 
   if (!Memory.rooms[_room].datums.creepRoleCount) {
+    Memory.rooms[_room].datums.creepRoleCount = {};
     for (var modelRole in Memory.rooms[_room].levelModel.creeps) {
       Memory.rooms[_room].datums.creepRoleCount[modelRole] = 0;
     }
