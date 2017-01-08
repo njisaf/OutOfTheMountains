@@ -49,7 +49,7 @@ module.exports.loop = function() {
     let level = Game.rooms[room].controller.level;
     Memory.rooms[room].levelModel = roomModel[level];
 
-    let roleChoice = determineRole(_room);
+    let roleChoice = determineRole(room);
     console.log('roleChoice: ', roleChoice);
     spawnCreep(roleChoice, _room);
 
