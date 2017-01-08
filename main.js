@@ -17,8 +17,7 @@ module.exports.loop = function() {
   Memory.datums.globalEnergyAvailable = 0;
   Memory.datums.globalEnergyCapacityAvailable = 0;
   //build all stats; Do that first. We'll reformat later if we really need to.
-  for (var _room in Game.rooms) {
-    let room = Game.rooms[_room];
+  for (var room in Game.rooms) {
 
     Memory.rooms[room] = {};
     Memory.rooms[room].datums = {
@@ -28,8 +27,8 @@ module.exports.loop = function() {
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
-    room.creepList = room.find(FIND_MY_CREEPS);
-    room.spawnList = room.find(FIND_MY_SPAWNS);
+    room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+    room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
 
     for (var _creep in room.creepList) {
       console.log('_creep', _creep);
