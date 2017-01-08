@@ -46,7 +46,8 @@ module.exports.loop = function() {
     }
 
     //setup levels
-    Memory.rooms[room].levelModel = roomModel[room.controller.level];
+    let level = Game.rooms[room].controller.level;
+    Memory.rooms[room].levelModel = roomModel[level];
 
     let roleChoice = determineRole(_room);
     console.log('roleChoice: ', roleChoice);
