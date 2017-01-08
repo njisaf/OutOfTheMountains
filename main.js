@@ -18,6 +18,9 @@ module.exports.loop = function() {
   //build all stats; Do that first. We'll reformat later if we really need to.
   for (var _room in Game.rooms) {
     let room = Game.rooms[_room];
+
+    room.memory.datums = {};
+
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
