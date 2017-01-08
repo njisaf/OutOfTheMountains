@@ -26,6 +26,7 @@ module.exports.loop = function() {
     };
 
     Memory.rooms[room] = {};
+    Memory.rooms[room].datums = {};
 
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
