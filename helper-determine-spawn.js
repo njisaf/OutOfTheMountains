@@ -7,6 +7,7 @@ module.exports = function(room) {
   for (var _creep in room.creepList) {
     let role = room.creepList[_creep].memory.role;
     console.log('role: ', role);
+    room.memory.datums.creepRoleCount[role] = 0;
     room.memory.datums.creepRoleCount[role] += 1;
   }
 

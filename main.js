@@ -13,13 +13,11 @@ const roomModel = require('datum-room-model');
 module.exports.loop = function() {
 
   Memory.datums = {};
-  Memory.rooms = {};
   Memory.datums.globalEnergyAvailable = 0;
   Memory.datums.globalEnergyCapacityAvailable = 0;
   //build all stats; Do that first. We'll reformat later if we really need to.
   for (var _room in Game.rooms) {
     let room = Game.rooms[_room];
-    Memory.rooms[room] = room;
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
