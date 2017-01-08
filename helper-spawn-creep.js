@@ -14,7 +14,7 @@ module.exports = function(role, _room) {
     console.log('spawn energy: ', _room.spawnList[i].name);
     if (Game.spawns[spawn].canCreateCreep(body)) {
       let newCreep = Game.spawns[spawn].createCreep(body, undefined, memory);
-      newCreep.say('I arise, as a new ' + role);
+      console.log('newCreep: ', newCreep);
       break;
     }
     console.log('Can\'t spawn, waiting for next tick');
