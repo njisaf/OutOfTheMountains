@@ -3,7 +3,7 @@
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
 
-const determineSpawn = require('helper-determine-spawn');
+const determineRole = require('helper-determine-role');
 const spawnCreep = require('helper-spawn-creep');
 
 const roomModel = require('datum-room-model');
@@ -37,7 +37,9 @@ module.exports.loop = function() {
     //setup levels
     room.memory.levelModel = roomModel[room.controller.level];
 
-    spawnCreep(determineSpawn(room), room);
+    let roleChoice = determineRole(room);
+    console.log('roleChoice: ', roleChoice);
+    spawnCreep(roleChoice, room);
 
   }
 
