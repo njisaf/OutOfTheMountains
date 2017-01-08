@@ -43,7 +43,7 @@ module.exports.loop = function() {
         Memory.rooms[room].datums.creepRoleCount[role] += 1;
       }
     } else {
-      Memory.rooms[_room].datums.creepRoleCount = 0;
+      Memory.rooms[_room].datums.creepRoleCount = 'NOTHING';
     }
       // for (var x in _room.creepList) {
       //   //christ I'm lazy

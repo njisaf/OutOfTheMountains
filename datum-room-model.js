@@ -3,19 +3,19 @@
 module.exports = {
 
   1: {
-    creeps: {
+    maintain: {
       harvester: 1,
       upgrader: 5,
     },
     structures: null,
   },
   2: {
-    creeps: {
+    maintain: {
       harvester: 1,
       upgrader: 5,
     },
     structures: {
-      
+
     },
   },
 

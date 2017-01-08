@@ -4,7 +4,7 @@ module.exports = function(_room) {
   let maxValue = null;
   let maxRole = null;
 
-  if (Memory.rooms[_room].datums.creepRoleCount === 0) {
+  if (Memory.rooms[_room].datums.creepRoleCount === 'NOTHING') {
     Memory.rooms[_room].datums.creepRoleCount = {};
     for (var modelRole in Memory.rooms[_room].levelModel.creeps) {
       Memory.rooms[_room].datums.creepRoleCount[modelRole] = 0;
@@ -22,7 +22,7 @@ module.exports = function(_room) {
     }
 
     let role = Memory.rooms[_room].datums.creepRoleCount[_role];
-    let match = Memory.rooms[_room].levelModel.creeps[_role];
+    let match = Memory.rooms[_room].levelModel.maintain[_role];
     if (role < match) {
       remainder = role % match;
       console.log('remainder: ', remainder);
