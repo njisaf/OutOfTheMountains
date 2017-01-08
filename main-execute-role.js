@@ -7,12 +7,12 @@ module.exports = function(creep) {
 
   console.log('creep executer: ', creep);
 
-  let role = Game.creeps[creep[0].name].memory.role;
+  let role = Game.creeps[creep[0]].memory.role;
   let roleModule = require('role-' + role);
   console.log('roleModule: ', roleModule);
 
   if (typeof roleModule.run === 'function') {
-    roleModule.run(creep[0].name);
+    roleModule.run(creep[0]);
   } else {
     console.log('!!! roleModule.run() is not a function for creep: ', creep);
   }
