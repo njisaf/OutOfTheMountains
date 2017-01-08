@@ -20,6 +20,7 @@ module.exports.loop = function() {
   for (var _room in Game.rooms) {
     let room = Game.rooms[_room];
 
+    Memory.rooms[room] = {};
     Memory.rooms[room].datums = {};
 
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
