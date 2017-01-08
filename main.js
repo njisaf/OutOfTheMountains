@@ -32,11 +32,7 @@ module.exports.loop = function() {
     //setup levels
     room.memory.levelModel = roomModel[room.controller.level];
 
-    let spawnChoice = determineSpawn(room);
-    console.log('spawnChoice: ', spawnChoice);
-
-    spawnCreep(spawnChoice, room);
-    //okay? LORD, you're hard to please. We can work on queues tomorrow or whatever, JESUS.
+    spawnCreep(determineSpawn(room), room);
 
   }
 
