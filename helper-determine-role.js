@@ -1,14 +1,16 @@
 'use strict';
 
-module.exports = function(room) {
+module.exports = function(_room) {
   let maxValue = null;
   let maxRole = null;
 
-  for (var _role in room.memory.datums.creepRoleCount) {
+  let room = Memory.rooms[_room];
+
+  for (var _role in room.datums.creepRoleCount) {
     console.log('_role: ', _role);
     let remainder = 0;
-    let role = room.memory.datums.creepRoleCount[_role];
-    let match = room.memory.model[_role];
+    let role = room.datums.creepRoleCount[_role];
+    let match = room.levelModel.creeps[_role];
     if (role < match) {
       remainder = role % match;
     }
