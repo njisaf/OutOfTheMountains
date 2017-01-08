@@ -22,7 +22,9 @@ module.exports = function(_room) {
     }
 
     let role = Memory.rooms[_room].datums.creepRoleCount[_role];
+    console.log('dertmineRole role: ', role);
     let match = Memory.rooms[_room].levelModel.maintain[_role];
+    console.log('dertmineRole match: ', match);
     if (role < match) {
       remainder = role % match;
       console.log('remainder: ', remainder);
