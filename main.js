@@ -34,7 +34,7 @@ module.exports.loop = function() {
 
     if (_room.creepList.length !== 0) {
       for (var i = 0; i < _room.creepList.length; i++) {
-        let _creep = _room.creepList[i];
+        let _creep = _room.creepList[i].name;
         console.log('_creep', _creep);
         let role = Memory.creeps[_creep].role;
         console.log('role: ', role);
