@@ -53,19 +53,15 @@ module.exports.loop = function() {
         Memory.rooms[room].datums.creepRoleCount[role] += 1;
       }
     }
-      // for (var x in _room.creepList) {
-      //   //christ I'm lazy
-      //   let _creep = _room.creepList[x];
-      //   console.log('_creep', _creep);
-      //   let role = Game.creeps[_creep].memory.role;
-      //   console.log('role: ', role);
-      //   Memory.rooms[room].datums.creepRoleCount[role] = 0;
-      //   Memory.rooms[room].datums.creepRoleCount[role] += 1;
-      // }
 
     let roleChoice = determineRole(room);
-    console.log('roleChoice: ', roleChoice);
-    spawnCreep(roleChoice, _room);
+
+    //might be better to put a toggle on the room, "level" or something;
+
+    if(roleChoice !== 'level') {
+      console.log('roleChoice: ', roleChoice);
+      spawnCreep(roleChoice, _room);
+    }
 
   }
 
