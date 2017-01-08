@@ -19,7 +19,7 @@ module.exports.loop = function() {
   for (var _room in Game.rooms) {
     let room = Game.rooms[_room];
 
-    room.memory.datums = {};
+    Memory.rooms[room].datums = {};
 
     Memory.datums.globalEnergyAvailable += room.energyAvailable;
     Memory.datums.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
@@ -30,12 +30,12 @@ module.exports.loop = function() {
     for (var _creep in room.creepList) {
       let role = room.creepList[_creep].memory.role;
       console.log('role: ', role);
-      room.memory.datums.creepRoleCount[role] = 0;
-      room.memory.datums.creepRoleCount[role] += 1;
+      Memory.rooms[room].datums.creepRoleCount[role] = 0;
+      Memory.rooms[room].datums.creepRoleCount[role] += 1;
     }
 
     //setup levels
-    room.memory.levelModel = roomModel[room.controller.level];
+    Memory.rooms[room].levelModel = roomModel[room.controller.level];
 
     let roleChoice = determineRole(room);
     console.log('roleChoice: ', roleChoice);
