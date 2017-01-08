@@ -9,7 +9,7 @@ module.exports = function(role, _room) {
   console.log('body: ', body);
 
   for (var i = 0; i < _room.spawnList.length; i++) {
-    let spawn = _room.spawnList[i];
+    let spawn = _room.spawnList[i].spawn;
     console.log('spawn: ', spawn);
     if (Game.spawns[spawn].canCreateCreep(body) === 'OK') {
       let newCreep = Game.spawns[spawn].createCreep(body, undefined, memory);
