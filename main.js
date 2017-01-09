@@ -12,33 +12,35 @@ const roomModel = require('datum-room-model');
 
 module.exports.loop = function() {
 
-  Memory.rooms = {};
-  Memory.datums = {};
-  Memory.datums.globalEnergyAvailable = 0;
-  Memory.datums.globalEnergyCapacityAvailable = 0;
+  PathFinder.use(isEnabled);
+
+  this.clausewitz = {};
+  let clausewitz = this.clausewitz;
+
+  clausewitz.rooms = {};
+  clausewitz.creeps = {};
+
+  clausewitz.globalEnergyAvailable = 0;
+  clausewitz.globalEnergyCapacityAvailable = 0;
+
   //build all stats; Do that first. We'll reformat later if we really need to.
   for (var room in Game.rooms) {
 
-    let _room = {
-      name: room,
-    };
+    clausewitz.rooms[room] = {};
 
-    Memory.rooms[room] = {};
-    Memory.rooms[room].datums = {};
+    clausewitz.roomLevel = Game.rooms[room].controller.level;
+    clausewitz.rooms[room].levelModel = roomModel[clausewitz.roomLevel];
 
-    let level = Game.rooms[room].controller.level;
-    Memory.rooms[room].levelModel = roomModel[level];
+    clausewitz.globalEnergyAvailable += Game.rooms[room].energyAvailable;
+    clausewitz.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
 
-    Memory.datums.globalEnergyAvailable += Game.rooms[room].energyAvailable;
-    Memory.datums.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
-
-    _room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
-    _room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
+    clausewitz.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+    clausewitz.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
 
     if (Memory.rooms[room].levelModel) {
-      Memory.rooms[room].datums.creepRoleCount = {};
-      for (var modelRole in Memory.rooms[room].levelModel.maintain) {
-        Memory.rooms[room].datums.creepRoleCount[modelRole] = 0;
+      clausewitz.rooms[room].creepRoleCount = {};
+      for (var modelRole in clausewitz.rooms[room].levelModel.maintain) {
+        clausewitz.rooms[room].creepRoleCount[modelRole] = 0;
       }
     }
 
