@@ -3,8 +3,8 @@
 const executeRole = require('main-execute-role');
 const cleanAll = require('main-clean-all');
 
-const determineRole = require('helper-determine-role');
-const spawnCreep = require('helper-spawn-creep');
+// const determineRole = require('helper-determine-role');
+// const spawnCreep = require('helper-spawn-creep');
 
 const roomModel = require('datum-room-model');
 
@@ -12,60 +12,70 @@ const roomModel = require('datum-room-model');
 
 module.exports.loop = function() {
 
-  PathFinder.use(isEnabled);
+  // PathFinder.use(isEnabled);
 
-  this.clausewitz = {};
-  let clausewitz = this.clausewitz;
+  this.fact = {};
+  let fact = this.fact;
 
-  clausewitz.rooms = {};
-  clausewitz.creeps = {};
+  fact.rooms = {};
+  fact.creeps = {};
 
-  clausewitz.globalEnergyAvailable = 0;
-  clausewitz.globalEnergyCapacityAvailable = 0;
+  fact.globalEnergyAvailable = 0;
+  fact.globalEnergyCapacityAvailable = 0;
 
   //build all stats; Do that first. We'll reformat later if we really need to.
   for (var room in Game.rooms) {
 
-    clausewitz.rooms[room] = {};
+    fact.rooms[room] = {};
+    fact.rooms[room].creeps = {};
 
-    clausewitz.roomLevel = Game.rooms[room].controller.level;
-    clausewitz.rooms[room].levelModel = roomModel[clausewitz.roomLevel];
+    fact.roomLevel = Game.rooms[room].controller.level;
+    fact.rooms[room].levelModel = roomModel[fact.roomLevel];
 
-    clausewitz.globalEnergyAvailable += Game.rooms[room].energyAvailable;
-    clausewitz.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
+    fact.globalEnergyAvailable += Game.rooms[room].energyAvailable;
+    fact.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
 
-    clausewitz.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
-    clausewitz.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
-
-    if (Memory.rooms[room].levelModel) {
-      clausewitz.rooms[room].creepRoleCount = {};
-      for (var modelRole in clausewitz.rooms[room].levelModel.maintain) {
-        clausewitz.rooms[room].creepRoleCount[modelRole] = 0;
+    if (fact.rooms[room].levelModel) {
+      fact.rooms[room].creepRoleCount = {};
+      for (var modelRole in fact.rooms[room].levelModel.maintain) {
+        fact.rooms[room].creepRoleCount[modelRole] = 0;
       }
     }
-
-    if (_room.creepList.length) {
-      for (var i = 0; i < _room.creepList.length; i++) {
-        let _creep = _room.creepList[i].name;
-        console.log('_creep', _creep);
-        let role = Memory.creeps[_creep].role;
-        console.log('role: ', role);
-        if (!Memory.rooms[room].datums.creepRoleCount[role])
-          Memory.rooms[room].datums.creepRoleCount[role] = 0;
-        Memory.rooms[room].datums.creepRoleCount[role] += 1;
-      }
-    }
-
-    let roleChoice = determineRole(room);
-
-    //might be better to put a toggle on the room, "level" or something;
-
-    if(roleChoice !== 'level') {
-      console.log('roleChoice: ', roleChoice);
-      spawnCreep(roleChoice, _room);
-    }
-
   }
+
+  for (var creep in Game.creeps) {
+
+    let creepRoom = Game.creeps[creep]._move.room;
+    fact.rooms[creepRoom][creep] = {};
+
+    fact.creeps[creep] = {};
+
+    let creepMission = Game.creeps[creep].memory.mission;
+    fact.creeps[creep].mission = creepMission;
+    fact.rooms[creepRoom][creep].mission = creepMission;
+  }
+
+    // if (fact.creepList.length) {
+    //   for (var i = 0; i < fact.creepList.length; i++) {
+    //     let _creep = fact.creepList[i].name;
+    //     console.log('_creep', _creep);
+    //     let role = Game.creeps[_creep].memory.role;
+    //     console.log('role: ', role);
+    //     if (!fact.rooms[room].creepRoleCount[role])
+    //       fact.rooms[room].creepRoleCount[role] = 0;
+    //     fact.rooms[room].creepRoleCount[role] += 1;
+    //   }
+    // }
+
+    // let roleChoice = determineRole(room);
+    //
+    // //might be better to put a toggle on the room, "level" or something;
+    //
+    // if(roleChoice !== 'level') {
+    //   console.log('roleChoice: ', roleChoice);
+    //   spawnCreep(roleChoice, _room);
+    // }
+
 
 //execute creep roles;
   for (var creepName in Game.creeps) {
@@ -77,3 +87,6 @@ module.exports.loop = function() {
   cleanAll();
 
 };
+
+// fact.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+// fact.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
