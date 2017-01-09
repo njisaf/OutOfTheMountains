@@ -10,6 +10,51 @@ const roomModel = require('datum-room-model');
 
 // in loop, we put everything that needs to be done every tick. Simple as that. If we need it to do anything else we'll build another set of functions;
 
+
+fact = {
+  rooms: {
+    creeps: {
+      creepname: {
+
+      },
+    },
+    creepMissionCount: {
+      missionname: {
+        creepname: {},
+      },
+      //etc
+    },
+    creepModelCount: {
+      modelname: {
+        creepname: {},
+      },
+      //etc
+    },
+    spawns: {
+      spawnname: {
+
+      },
+    },
+    roomLevel: 0,
+    levelModel: {
+      //etc
+    },
+  },
+  creeps: {
+    creepname: {
+      mission: 'string',
+
+
+    },
+  },
+  // spawns: {
+  //
+  // },
+  globalEnergyAvailable: 0,
+  globalEnergyCapacityAvailable: 0,
+
+};
+
 module.exports.loop = function() {
 
   // PathFinder.use(isEnabled);
@@ -19,6 +64,7 @@ module.exports.loop = function() {
 
   fact.rooms = {};
   fact.creeps = {};
+  fact.spawns = {};
 
   fact.globalEnergyAvailable = 0;
   fact.globalEnergyCapacityAvailable = 0;
@@ -27,32 +73,60 @@ module.exports.loop = function() {
   for (var room in Game.rooms) {
 
     fact.rooms[room] = {};
-    fact.rooms[room].creeps = {};
 
-    fact.roomLevel = Game.rooms[room].controller.level;
+    fact.rooms[room].creeps = {};
+    fact.rooms[room].creepMissionCount = {};
+
+    fact.rooms[room].roomLevel = Game.rooms[room].controller.level;
     fact.rooms[room].levelModel = roomModel[fact.roomLevel];
 
     fact.globalEnergyAvailable += Game.rooms[room].energyAvailable;
     fact.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
 
     if (fact.rooms[room].levelModel) {
-      fact.rooms[room].creepRoleCount = {};
+      fact.rooms[room].creepModelCount = {};
       for (var modelRole in fact.rooms[room].levelModel.maintain) {
-        fact.rooms[room].creepRoleCount[modelRole] = 0;
+        fact.rooms[room].creepModelCount[modelRole] = 0;
       }
     }
   }
 
   for (var creep in Game.creeps) {
 
-    let creepRoom = Game.creeps[creep]._move.room;
-    fact.rooms[creepRoom][creep] = {};
-
     fact.creeps[creep] = {};
 
+    let creepRoom = Game.creeps[creep].pos.room;
+    fact.rooms[creepRoom].creeps = {};
+    fact.rooms[creepRoom].creeps[creep] = {};
+
+    //add missions and mission counts
     let creepMission = Game.creeps[creep].memory.mission;
     fact.creeps[creep].mission = creepMission;
     fact.rooms[creepRoom][creep].mission = creepMission;
+    fact.rooms[creepRoom].creepMissionCount = {};
+    fact.rooms[creepRoom].creepMissionCount[creepMission][creep] = {};
+
+    //do roles too
+    let creepModel = Game.creeps[creep].memory.model;
+    fact.creeps[creep].model = creepModel;
+    fact.rooms[creepRoom][creep].model = creepModel;
+    fact.rooms[creepRoom].creepModelCount = {};
+    fact.rooms[creepRoom].creepModelCount[creepModel][creep] = {};
+  }
+
+  //okay now we need the spawns!
+  for (var spawn in Game.spawns) {
+
+    //add spawn to the spawn list
+    // fact.spawns[spawn] = {};
+
+    //find the spawn room
+    let spawnRoom = Game.spawns[spawn].pos.room;
+
+    //add spawn list to the room, add the spawn to the list;
+    fact.rooms[spawnRoom].spawns = {};
+    //trying to add whole object, I'll need it all. Might not work?
+    fact.rooms[spawnRoom].spawns[spawn] = Game.spawns[spawn];
   }
 
     // if (fact.creepList.length) {
