@@ -10,50 +10,49 @@ const roomModel = require('datum-room-model');
 
 // in loop, we put everything that needs to be done every tick. Simple as that. If we need it to do anything else we'll build another set of functions;
 
-
-fact = {
-  rooms: {
-    creeps: {
-      creepname: {
-
-      },
-    },
-    creepMissionCount: {
-      missionname: {
-        creepname: {},
-      },
-      //etc
-    },
-    creepModelCount: {
-      modelname: {
-        creepname: {},
-      },
-      //etc
-    },
-    spawns: {
-      spawnname: {
-
-      },
-    },
-    roomLevel: 0,
-    levelModel: {
-      //etc
-    },
-  },
-  creeps: {
-    creepname: {
-      mission: 'string',
-
-
-    },
-  },
-  // spawns: {
-  //
-  // },
-  globalEnergyAvailable: 0,
-  globalEnergyCapacityAvailable: 0,
-
-};
+// fact = {
+//   rooms: {
+//     creeps: {
+//       creepname: {
+//
+//       },
+//     },
+//     creepMissionCount: {
+//       missionname: {
+//         creepname: {},
+//       },
+//       //etc
+//     },
+//     creepModelCount: {
+//       modelname: {
+//         creepname: {},
+//       },
+//       //etc
+//     },
+//     spawns: {
+//       spawnname: {
+//
+//       },
+//     },
+//     roomLevel: 0,
+//     levelModel: {
+//       //etc
+//     },
+//   },
+//   creeps: {
+//     creepname: {
+//       mission: 'string',
+//
+//
+//     },
+//   },
+//   // spawns: {
+//   //
+//   // },
+//   globalEnergyAvailable: 0,
+//   globalEnergyCapacityAvailable: 0,
+//
+// };
 
 module.exports.loop = function() {
 
@@ -129,6 +128,9 @@ module.exports.loop = function() {
     fact.rooms[spawnRoom].spawns[spawn] = Game.spawns[spawn];
   }
 
+
+    //well there we go, we've bloody reconstructed the object for some reason. I sort of remember what I was doing.
+
     // if (fact.creepList.length) {
     //   for (var i = 0; i < fact.creepList.length; i++) {
     //     let _creep = fact.creepList[i].name;
@@ -159,6 +161,8 @@ module.exports.loop = function() {
 
 
   cleanAll();
+
+  Memory.clausewitz = this.fact;
 
 };
 
