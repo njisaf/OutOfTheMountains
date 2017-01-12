@@ -131,17 +131,15 @@ module.exports.loop = function() {
 
     //well there we go, we've bloody reconstructed the object for some reason. I sort of remember what I was doing.
 
-    // if (fact.creepList.length) {
-    //   for (var i = 0; i < fact.creepList.length; i++) {
-    //     let _creep = fact.creepList[i].name;
-    //     console.log('_creep', _creep);
-    //     let role = Game.creeps[_creep].memory.role;
-    //     console.log('role: ', role);
-    //     if (!fact.rooms[room].creepRoleCount[role])
-    //       fact.rooms[room].creepRoleCount[role] = 0;
-    //     fact.rooms[room].creepRoleCount[role] += 1;
-    //   }
-    // }
+    //it's ridiculous that I did all that, totally ridiculous... Oh well, I'm sure there'll be a point somewhere.
+    //okay what we're doing here is detecting a mission. Our first mission is harvestAndTransfer. This will harvest from source, and then deposit it immediately in the nearest structure.
+    //well, let's think this through. harvest is one thing. Maybe we should break it down.
+    //like we set the mission like, moveTo(target), harvest(target);
+      //better as an array as planned. [moveTo(target1), harvest(target1), moveTo(target2), transfer(target2)]
+        //so we write our own syntax, and the command does like, checks if it's at the target then does whatever.
+          //so the target is a what? Depends on the commands we use, let's start with moveTo target.
+
+
 
     // let roleChoice = determineRole(room);
     //
