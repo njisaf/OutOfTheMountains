@@ -4,12 +4,12 @@ module.exports = {
 
   run: function(creep) {
     //check the creep's memory for the mission.
-    let mission = Game.creeps[creep].memory.mission;
-    let missionStage = Game.creeps[creep].memory.missionStage;
+    let mission = creep.memory.mission;
+    let missionStage = creep.memory.missionStage;
 
     //i think it's equals...
     if (missionStage === mission.length) {
-      Game.creeps[creep].memory.missionStage = 0;
+      creep.memory.missionStage = 0;
       missionStage = 0;
     }
 
@@ -42,17 +42,22 @@ module.exports = {
 
     let _next = this[next];
     return function _moveTo(creep) {
-      if (creep[_next](target) === ERR_NOT_IN_RANGE) {
+      if (_next(creep, target) === ERR_NOT_IN_RANGE) {
         creep.moveTo(target);
       } else {
-        creep[_next](target);
+        _next(creep, target);
       }
     };
   },
 
-  upgrade: function(target) {
+  upgrade: function(creep, target) {
 
-    
+    if(creep.carry.energy === 0) {
+      creep.memory.missionStage += 1;
+      creep.say('Energy expended. Advancing stage');
+    } else {
+      return creep.upgradeController(target);
+    }
 
   },
 
