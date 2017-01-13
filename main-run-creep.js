@@ -7,12 +7,12 @@ module.exports = function(creep) {
   console.log('Running creep: ', creep.name);
 
   let mission = creep.memory.mission;
-  console.log('mission length ', mission.length);
+  let length = Object.keys(mission).length;
   let missionStage = creep.memory.missionStage;
 
   //we'll store conditions on the first index of mission;
 
-  if (missionStage === mission.length) {
+  if (missionStage === length) {
     creep.memory.missionStage = 1;
     missionStage = 1;
   }
