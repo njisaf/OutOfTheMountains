@@ -26,7 +26,7 @@ module.exports = {
 
     if(creep.carry.energy === 0) {
       creep.memory.missionStage += 1;
-      creep.say('Energy expended. Advancing stage');
+      creep.say('Empty');
       return;
     } else {
       let result = creep.upgradeController(target);
@@ -35,7 +35,7 @@ module.exports = {
       }
       if(creep.carry.energy === 0) {
         creep.memory.missionStage += 1;
-        creep.say('Energy expended. Advancing stage');
+        creep.say('Empty');
       }
       return result;
     }
@@ -47,13 +47,13 @@ module.exports = {
 
     if(creep.carry.energy === creep.carryCapacity) {
       creep.memory.missionStage += 1;
-      creep.say('Energy full. Advancing stage');
+      creep.say('Full');
       return;
     } else {
       let result = creep.harvest(target);
       if(creep.carry.energy === creep.carryCapacity) {
         creep.memory.missionStage += 1;
-        creep.say('Energy full. Advancing stage');
+        creep.say('Full');
       }
       return result;
     }
