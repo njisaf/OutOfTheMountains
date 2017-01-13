@@ -1,22 +1,20 @@
 'use strict';
 
 // General Purpose Unit v2.0
-  //The GPU is a fire-and-forget drone exceling in base construction and maintenance.
-  //Its specialized functions and checks ensure that your base is erected with clockwork efficiency and unparalleled speed.
-  //what if I could control the goals of the entire class? set overall priorities for action...
-    //oh fuck, that's what the scenario is, shit.
+  //The GPU is a fire-and-forget drone specializing in base construction and maintenance.
+  //Its advanced functions and checks ensure that your base is erected with clockwork efficiency and unparalleled speed.
+  //constants will be set by scenario.
 
 module.exports = {
 
   moveTo: function(next) {
     console.log('MoveTo hit');
 
-    let _next = this[next];
     return function _moveTo(creep, target) {
-      if (_next(creep, target) === ERR_NOT_IN_RANGE) {
+      if (next(creep, target) === ERR_NOT_IN_RANGE) {
         creep.moveTo(target);
       } else {
-        _next(creep, target);
+        next(creep, target);
       }
     };
   },
