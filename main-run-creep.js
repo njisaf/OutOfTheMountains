@@ -34,15 +34,11 @@ module.exports = function(creep) {
     console.log('!!! GPU next is not a function. Creep: ', creep);
   }
 
-
-  let assignedTo = creep.memory.assignedTo;
-  let room = this.rooms[assignedTo];
-  console.log('run-room: ', room.name);
-
   let objectSplit = object.split('@');
-  //got to reverse them because it's a special syntax I've invented!
-  let target = room[objectSplit[1]][objectSplit[0]];
-  console.log('run-target', target);
+  let assignedTo = creep.memory.assignedTo;
+  let target = this.rooms[assignedTo][objectSplit[1][0]][objectSplit[0]];
+  console.log('run-room: ', assignedTo);
+  console.log('run-target: ', target);
 
   let doThis = role[action](target, next);
   doThis();
