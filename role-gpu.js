@@ -27,17 +27,19 @@ module.exports = {
     if(creep.carry.energy === 0) {
       creep.memory.missionStage += 1;
       creep.say('Energy expended. Advancing stage');
+      return;
     } else {
-      if (creep.upgradeController(target) === ERR_INVALID_TARGET) {
+      let result = creep.upgradeController(target);
+      if (result === ERR_INVALID_TARGET) {
         console.log('!!! GPU.upgrade ERR_INVALID_TARGET: ', target);
-      } else {
-        creep.upgradeController(target);
-        if(creep.carry.energy === 0) {
-          creep.memory.missionStage += 1;
-          creep.say('Energy expended. Advancing stage');
-        }
       }
+      if(creep.carry.energy === 0) {
+        creep.memory.missionStage += 1;
+        creep.say('Energy expended. Advancing stage');
+      }
+      return result;
     }
+
   },
 
   harvest: function(creep, target) {
@@ -46,12 +48,14 @@ module.exports = {
     if(creep.carry.energy === creep.carryCapacity) {
       creep.memory.missionStage += 1;
       creep.say('Energy full. Advancing stage');
+      return;
     } else {
-      creep.harvest(target);
+      let result = creep.harvest(target);
       if(creep.carry.energy === creep.carryCapacity) {
         creep.memory.missionStage += 1;
         creep.say('Energy full. Advancing stage');
       }
+      return result;
     }
   },
 
