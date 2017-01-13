@@ -34,7 +34,9 @@ module.exports.loop = function() {
     fact.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
     //these room are all on fact, don't forget
-    room.controller = Game.rooms[_room].controller;
+    room.controllers = {};
+    //have to do this to make it work like the other lists. going to put the assignment function on the object here eventually, but for now...
+    room.controllers[0] = Game.rooms[_room].controller;
     room.sources = Game.rooms[_room].find(FIND_SOURCES);
     room.spawns = Game.rooms[_room].find(FIND_MY_SPAWNS);
     room.structures = Game.rooms[_room].find(FIND_MY_STRUCTURES);
