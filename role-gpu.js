@@ -7,16 +7,14 @@
 
 module.exports = {
 
-  moveTo: function(next) {
+  moveTo: function(creep, target, next) {
     console.log('MoveTo hit');
 
-    return function _moveTo(creep, target) {
-      if (next(creep, target) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(target);
-      } else {
-        next(creep, target);
-      }
-    };
+    if (next(creep, target) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(target);
+    } else {
+      next(creep, target);
+    }
   },
 
   upgrade: function(creep, target) {
