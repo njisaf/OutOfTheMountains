@@ -1,6 +1,6 @@
 'use strict';
 
-const executeRole = require('main-execute-role');
+const run = require('main-run-creep');
 const cleanAll = require('main-clean-all');
 
 // const determineRole = require('helper-determine-role');
@@ -8,51 +8,7 @@ const cleanAll = require('main-clean-all');
 
 const roomModel = require('datum-room-model');
 
-// in loop, we put everything that needs to be done every tick. Simple as that. If we need it to do anything else we'll build another set of functions;
 
-// fact = {
-//   rooms: {
-//     creeps: {
-//       creepname: {
-//
-//       },
-//     },
-//     creepMissionCount: {
-//       missionname: {
-//         creepname: {},
-//       },
-//       //etc
-//     },
-//     creepModelCount: {
-//       modelname: {
-//         creepname: {},
-//       },
-//       //etc
-//     },
-//     spawns: {
-//       spawnname: {
-//
-//       },
-//     },
-//     roomLevel: 0,
-//     levelModel: {
-//       //etc
-//     },
-//   },
-//   creeps: {
-//     creepname: {
-//       mission: 'string',
-//
-//
-//     },
-//   },
-//   // spawns: {
-//   //
-//   // },
-//   globalEnergyAvailable: 0,
-//   globalEnergyCapacityAvailable: 0,
-//
-// };
 
 module.exports.loop = function() {
 
@@ -154,7 +110,7 @@ module.exports.loop = function() {
 //execute creep roles;
   for (var creepName in Game.creeps) {
     let creep = Game.creeps[creepName];
-    executeRole(creep);
+    run(creep);
   }
 
 

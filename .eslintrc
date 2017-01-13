@@ -36,6 +36,7 @@
     "RESOURCE_ENERGY": true,
     "STRUCTURE_SPAWN": true,
     "STRUCTURE_TOWER": true,
+    "ERR_INVALID_TARGET": true,
   },
   "ecmaFeatures": {
     "modules": true,

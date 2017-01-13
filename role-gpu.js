@@ -7,10 +7,11 @@ module.exports = {
     let mission = creep.memory.mission;
     let missionStage = creep.memory.missionStage;
 
-    //i think it's equals...
-    if (missionStage === mission.length) {
-      creep.memory.missionStage = 0;
-      missionStage = 0;
+    //we'll store conditions on the first index of mission;
+
+    if (missionStage > mission.length) {
+      creep.memory.missionStage = 1;
+      missionStage = 1;
     }
 
     let stepString = mission[missionStage];
@@ -19,7 +20,7 @@ module.exports = {
     console.log('stepSplit', stepSplit);
     let action = stepSplit[0];
     let object = stepSplit[1];
-    let objectName = stepSplit[2];
+    let hash = stepSplit[2];
     let next = stepSplit[3];
 
     if (typeof this[action] !== 'function') {
@@ -29,11 +30,11 @@ module.exports = {
       console.log('!!! GPU next is not a function. Creep: ', creep);
     }
 
-    let target = Game[object][objectName];
+    let target = Game[object][hash];
     console.log('target', target);
 
     let doThis = this[action](target, next);
-    doThis(creep);
+    doThis();
 
   },
 
@@ -51,14 +52,67 @@ module.exports = {
   },
 
   upgrade: function(creep, target) {
+    console.log('upgrade hit');
 
     if(creep.carry.energy === 0) {
       creep.memory.missionStage += 1;
       creep.say('Energy expended. Advancing stage');
     } else {
-      return creep.upgradeController(target);
+      if (creep.upgradeController(target) === ERR_INVALID_TARGET) {
+        console.log('!!! GPU.upgrade ERR_INVALID_TARGET: ', target);
+      } else {
+        creep.upgradeController(target);
+        if(creep.carry.energy === 0) {
+          creep.memory.missionStage += 1;
+          creep.say('Energy expended. Advancing stage');
+        }
+      }
     }
-
   },
 
 };
+
+
+// fact = {
+//   rooms: {
+//     creeps: {
+//       creepname: {
+//
+//       },
+//     },
+//     creepMissionCount: {
+//       missionname: {
+//         creepname: {},
+//       },
+//       //etc
+//     },
+//     creepModelCount: {
+//       modelname: {
+//         creepname: {},
+//       },
+//       //etc
+//     },
+//     spawns: {
+//       spawnname: {
+//
+//       },
+//     },
+//     roomLevel: 0,
+//     levelModel: {
+//       //etc
+//     },
+//   },
+//   creeps: {
+//     creepname: {
+//       mission: 'string',
+//
+//
+//     },
+//   },
+//   // spawns: {
+//   //
+//   // },
+//   globalEnergyAvailable: 0,
+//   globalEnergyCapacityAvailable: 0,
+//
+// };
