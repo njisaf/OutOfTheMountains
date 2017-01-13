@@ -2,7 +2,7 @@
 
 module.exports = function(creep) {
 
-  let fact = this.fact;
+  // let fact = this.fact;
 
   let mission = creep.memory.mission;
   let missionStage = creep.memory.missionStage;
@@ -36,7 +36,7 @@ module.exports = function(creep) {
 
 
   let assignedTo = creep.memory.assignedTo;
-  let room = fact.rooms[assignedTo];
+  let room = this.rooms[assignedTo];
   console.log('run-room: ', room.name);
 
   let objectSplit = object.split('@');
