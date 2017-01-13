@@ -55,8 +55,8 @@ module.exports.loop = function() {
     }
     let mission = {
       0: null,
-      1: 'moveTo.sources@room.harvest',
-      2: 'moveTo.controller@room.upgrade',
+      1: 'moveTo.sources.harvest',
+      2: 'moveTo.controller.upgrade',
     };
     spawnCreep('gpu', room, mission, null);
   }
