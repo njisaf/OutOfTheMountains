@@ -40,6 +40,20 @@ module.exports = {
     }
   },
 
+  harvest: function(creep, target) {
+
+    if(creep.carry.energy === creep.carryCapacity) {
+      creep.memory.missionStage += 1;
+      creep.say('Energy full. Advancing stage');
+    } else {
+      creep.harvest(target);
+      if(creep.carry.energy === creep.carryCapacity) {
+        creep.memory.missionStage += 1;
+        creep.say('Energy full. Advancing stage');
+      }
+    }
+  },
+
 };
 
 
