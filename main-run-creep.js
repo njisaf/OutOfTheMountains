@@ -35,11 +35,13 @@ module.exports = function(creep) {
   }
 
 
-  let room = creep.pos.room;
-  console.log('run-room: ', room);
+  let assignedTo = creep.memory.assignedTo;
+  let room = fact.rooms[assignedTo];
+  console.log('run-room: ', room.name);
 
   let objectSplit = object.split('@');
-  let target = objectSplit[1][objectSplit[0]];
+  //got to reverse them because it's a special syntax I've invented!
+  let target = room[objectSplit[1]][objectSplit[0]];
   console.log('run-target', target);
 
   let doThis = role[action](target, next);

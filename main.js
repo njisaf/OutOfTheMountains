@@ -25,6 +25,7 @@ module.exports.loop = function() {
 
     fact.rooms[_room] = {};
     let room = fact.rooms[_room];
+    room.name = _room;
 
     room.energyAvailable = Game.rooms[_room].energyAvailable;
     room.energyCapacityAvailable = Game.rooms[_room].energyCapacityAvailable;

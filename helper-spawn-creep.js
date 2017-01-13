@@ -2,6 +2,7 @@
 
 module.exports = function(model, room, mission, body) {
   let memory = {
+    assignedTo: room.name,
     model: model,
     mission: mission,
     missionStage: 1,
