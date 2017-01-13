@@ -4,7 +4,10 @@ module.exports = function(model, room, mission, body) {
   let memory = {
     model: model,
     mission: mission,
+    missionStage: 1,
   };
+
+  //if we set missionStage to 0, we can automate a check on the new creep's mission; fuck it for now;
 
   if(!body) {
     //we'll stick the body generator in here at first I guess.

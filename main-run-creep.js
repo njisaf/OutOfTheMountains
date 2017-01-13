@@ -2,6 +2,8 @@
 
 module.exports = function(creep) {
 
+  let fact = this.fact;
+
   let mission = creep.memory.mission;
   let missionStage = creep.memory.missionStage;
 
