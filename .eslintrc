@@ -14,6 +14,8 @@
     "jasmine": true
   },
   "globals": {
+    "PathFinder": true,
+    "isEnabled": true,
     "_": true,
     "Game": true,
     "Memory": true,
@@ -34,6 +36,7 @@
     "RESOURCE_ENERGY": true,
     "STRUCTURE_SPAWN": true,
     "STRUCTURE_TOWER": true,
+    "ERR_INVALID_TARGET": true,
   },
   "ecmaFeatures": {
     "modules": true,

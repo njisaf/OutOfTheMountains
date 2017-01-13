@@ -1,77 +1,80 @@
 'use strict';
 
-const executeRole = require('main-execute-role');
+const run = require('main-run-creep');
 const cleanAll = require('main-clean-all');
 
-const determineRole = require('helper-determine-role');
 const spawnCreep = require('helper-spawn-creep');
 
-const roomModel = require('datum-room-model');
+// const roomModel = require('datum-room-model');
 
-// in loop, we put everything that needs to be done every tick. Simple as that. If we need it to do anything else we'll build another set of functions;
+
 
 module.exports.loop = function() {
 
-  Memory.rooms = {};
-  Memory.datums = {};
-  Memory.datums.globalEnergyAvailable = 0;
-  Memory.datums.globalEnergyCapacityAvailable = 0;
-  //build all stats; Do that first. We'll reformat later if we really need to.
-  for (var room in Game.rooms) {
+  this.fact = {};
+  let fact = this.fact;
 
-    let _room = {
-      name: room,
-    };
+  fact.rooms = {};
+  fact.creeps = {};
+  // fact.spawns = {};
+  fact.globalEnergyAvailable = 0;
+  fact.globalEnergyCapacityAvailable = 0;
 
-    Memory.rooms[room] = {};
-    Memory.rooms[room].datums = {};
+  //let's just do this one at a goddamn time just to save our sanity.
+  for (var _room in Game.rooms) {
 
-    let level = Game.rooms[room].controller.level;
-    Memory.rooms[room].levelModel = roomModel[level];
+    fact.rooms[_room] = {};
+    let room = fact.rooms[_room];
 
-    Memory.datums.globalEnergyAvailable += Game.rooms[room].energyAvailable;
-    Memory.datums.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
+    room.energyAvailable = Game.rooms[_room].energyAvailable;
+    room.energyCapacityAvailable = Game.rooms[_room].energyCapacityAvailable;
 
-    _room.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
-    _room.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
+    fact.globalEnergyAvailable += room.energyAvailable;
+    fact.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
-    if (Memory.rooms[room].levelModel) {
-      Memory.rooms[room].datums.creepRoleCount = {};
-      for (var modelRole in Memory.rooms[room].levelModel.maintain) {
-        Memory.rooms[room].datums.creepRoleCount[modelRole] = 0;
-      }
-    }
+    //these room are all on fact, don't forget
+    room.controller = Game.rooms[_room].controller;
+    room.sources = Game.rooms[_room].find(FIND_SOURCES);
+    room.spawns = Game.rooms[_room].find(FIND_MY_SPAWNS);
+    room.structures = Game.rooms[_room].find(FIND_MY_STRUCTURES);
 
-    if (_room.creepList.length) {
-      for (var i = 0; i < _room.creepList.length; i++) {
-        let _creep = _room.creepList[i].name;
-        console.log('_creep', _creep);
-        let role = Memory.creeps[_creep].role;
-        console.log('role: ', role);
-        if (!Memory.rooms[room].datums.creepRoleCount[role])
-          Memory.rooms[room].datums.creepRoleCount[role] = 0;
-        Memory.rooms[room].datums.creepRoleCount[role] += 1;
-      }
-    }
-
-    let roleChoice = determineRole(room);
-
-    //might be better to put a toggle on the room, "level" or something;
-
-    if(roleChoice !== 'level') {
-      console.log('roleChoice: ', roleChoice);
-      spawnCreep(roleChoice, _room);
-    }
+    //next we're going to run calculations on the things. We'll stick the functions right on the fact room, and call them each time the mission hits. FUCK YEAH
 
   }
+
+
+  //spawn some creeps in each room.
+  //targets can be anything we have on the fact.rooms[room] object.
+    //room is the room it's in... perhaps game as well. Should also be able to accept a specific room name. location too?
+
+  for (var spawnRoom in Game.rooms) {
+    let room = fact.rooms[spawnRoom];
+    if (!room) {
+      console.log('!!! Not ready for spawning! Room: ', room);
+    }
+    let mission = {
+      0: null,
+      1: 'moveTo.sources@room.harvest',
+      2: 'moveTo.controller@room.upgrade',
+    };
+    spawnCreep('gpu', room, mission, null);
+  }
+
 
 //execute creep roles;
   for (var creepName in Game.creeps) {
     let creep = Game.creeps[creepName];
-    executeRole(creep);
+    //oh shit son, BIND. that's right, mfer, bind.
+    let runThis = run.bind(fact);
+    runThis(creep);
   }
 
 
   cleanAll();
 
+  Memory.clausewitz = this.fact;
+
 };
+
+// fact.creepList = Game.rooms[room].find(FIND_MY_CREEPS);
+// fact.spawnList = Game.rooms[room].find(FIND_MY_SPAWNS);
