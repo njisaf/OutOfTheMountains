@@ -43,7 +43,7 @@ module.exports = function(creep) {
   let target = list[0];
   console.log('run-target: ', target);
 
-  let doThis = role[action](creep, target, role[next]);
-  doThis();
+  let doThis = role[action];
+  doThis(creep, target, role[next]);
 
 };
