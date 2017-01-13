@@ -9,7 +9,7 @@ module.exports = function(creep) {
 
   //we'll store conditions on the first index of mission;
 
-  if (missionStage > mission.length) {
+  if (missionStage === mission.length) {
     creep.memory.missionStage = 1;
     missionStage = 1;
   }
