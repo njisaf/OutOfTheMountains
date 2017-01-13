@@ -1,42 +1,12 @@
 'use strict';
 
+// General Purpose Unit v2.0
+  //The GPU is a fire-and-forget drone exceling in base construction and maintenance.
+  //Its specialized functions and checks ensure that your base is erected with clockwork efficiency and unparalleled speed.
+  //what if I could control the goals of the entire class? set overall priorities for action...
+    //oh fuck, that's what the scenario is, shit.
+
 module.exports = {
-
-  run: function(creep) {
-    //check the creep's memory for the mission.
-    let mission = creep.memory.mission;
-    let missionStage = creep.memory.missionStage;
-
-    //we'll store conditions on the first index of mission;
-
-    if (missionStage > mission.length) {
-      creep.memory.missionStage = 1;
-      missionStage = 1;
-    }
-
-    let stepString = mission[missionStage];
-
-    let stepSplit = stepString.split('.');
-    console.log('stepSplit', stepSplit);
-    let action = stepSplit[0];
-    let object = stepSplit[1];
-    let hash = stepSplit[2];
-    let next = stepSplit[3];
-
-    if (typeof this[action] !== 'function') {
-      console.log('!!! GPU action is not a function. Creep: ', creep);
-    }
-    if (typeof this[next] !== 'function') {
-      console.log('!!! GPU next is not a function. Creep: ', creep);
-    }
-
-    let target = Game[object][hash];
-    console.log('target', target);
-
-    let doThis = this[action](target, next);
-    doThis();
-
-  },
 
   moveTo: function(target, next) {
     console.log('MoveTo hit');

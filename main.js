@@ -4,7 +4,7 @@ const run = require('main-run-creep');
 const cleanAll = require('main-clean-all');
 
 // const determineRole = require('helper-determine-role');
-// const spawnCreep = require('helper-spawn-creep');
+const spawnCreep = require('helper-spawn-creep');
 
 const roomModel = require('datum-room-model');
 
@@ -85,26 +85,19 @@ module.exports.loop = function() {
   }
 
 
-    //well there we go, we've bloody reconstructed the object for some reason. I sort of remember what I was doing.
+  //spawn some creeps in each room.
+  //targets can be anything we have on the fact.rooms[room] object.
+    //room is the room it's in... perhaps game as well. Should also be able to accept a specific room name. location too?
 
-    //it's ridiculous that I did all that, totally ridiculous... Oh well, I'm sure there'll be a point somewhere.
-    //okay what we're doing here is detecting a mission. Our first mission is harvestAndTransfer. This will harvest from source, and then deposit it immediately in the nearest structure.
-    //well, let's think this through. harvest is one thing. Maybe we should break it down.
-    //like we set the mission like, moveTo(target), harvest(target);
-      //better as an array as planned. [moveTo(target1), harvest(target1), moveTo(target2), transfer(target2)]
-        //so we write our own syntax, and the command does like, checks if it's at the target then does whatever.
-          //so the target is a what? Depends on the commands we use, let's start with moveTo target.
-
-
-
-    // let roleChoice = determineRole(room);
-    //
-    // //might be better to put a toggle on the room, "level" or something;
-    //
-    // if(roleChoice !== 'level') {
-    //   console.log('roleChoice: ', roleChoice);
-    //   spawnCreep(roleChoice, _room);
-    // }
+  for (var spawnRoom in Game.rooms) {
+    let room = fact.rooms[spawnRoom];
+    let mission = {
+      0: null,
+      1: 'moveTo.sources@room.harvest',
+      2: 'moveTo.controller@room.upgrade',
+    };
+    spawnCreep('gpu', room, mission, null);
+  }
 
 
 //execute creep roles;

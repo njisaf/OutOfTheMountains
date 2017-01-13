@@ -17,6 +17,8 @@ module.exports = function(creep) {
 
   let stepString = mission[missionStage];
 
+  //
+
   let stepSplit = stepString.split('.');
   console.log('stepSplit', stepSplit);
   let action = stepSplit[0];
@@ -29,6 +31,12 @@ module.exports = function(creep) {
   }
   if (typeof role[next] !== 'function') {
     console.log('!!! GPU next is not a function. Creep: ', creep);
+  }
+
+
+  //I'll just have to stick the sources on the room object and do this here.
+  if (object === 'source') {
+    
   }
 
   let target = Game[object][hash];
