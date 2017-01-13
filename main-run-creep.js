@@ -4,7 +4,10 @@ module.exports = function(creep) {
 
   // let fact = this.fact;
 
+  console.log('Running creep: ', creep.name);
+
   let mission = creep.memory.mission;
+  console.log('mission length ', mission.length);
   let missionStage = creep.memory.missionStage;
 
   //we'll store conditions on the first index of mission;
@@ -18,9 +21,7 @@ module.exports = function(creep) {
   let role = require('role-' + model);
 
   let stepString = mission[missionStage];
-
-  //
-
+  console.log('stepString ', stepString);
   let stepSplit = stepString.split('.');
   console.log('stepSplit', stepSplit);
   let action = stepSplit[0];
