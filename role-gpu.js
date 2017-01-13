@@ -30,7 +30,7 @@ module.exports = {
     }
     if(creep.carry.energy === 0) {
       creep.memory.missionStage += 1;
-      console.log(creep.name + ' missionStage now: ' + creep.memory.missionStage);
+      console.log(creep.name + ' missionStage 2 now: ' + creep.memory.missionStage);
       creep.say('Empty');
     }
     return result;
@@ -43,7 +43,7 @@ module.exports = {
     let result = creep.harvest(target);
     if(creep.carry.energy === creep.carryCapacity) {
       creep.memory.missionStage += 1;
-      console.log(creep.name + ' missionStage now: ' + creep.memory.missionStage);
+      console.log(creep.name + ' missionStage 3 now: ' + creep.memory.missionStage);
       creep.say('Full');
     }
     return result;
