@@ -64,7 +64,9 @@ module.exports.loop = function() {
 //execute creep roles;
   for (var creepName in Game.creeps) {
     let creep = Game.creeps[creepName];
-    run(creep);
+    //oh shit son, BIND. that's right, mfer, bind.
+    let runThis = run.bind(fact);
+    runThis(creep);
   }
 
 
