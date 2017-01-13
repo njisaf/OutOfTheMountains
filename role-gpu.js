@@ -24,39 +24,27 @@ module.exports = {
   upgrade: function(creep, target) {
     console.log('upgrade hit');
 
+    let result = creep.upgradeController(target);
+    if (result === ERR_INVALID_TARGET) {
+      console.log('!!! GPU.upgrade ERR_INVALID_TARGET: ', target);
+    }
     if(creep.carry.energy === 0) {
       creep.memory.missionStage += 1;
       creep.say('Empty');
-      return;
-    } else {
-      let result = creep.upgradeController(target);
-      if (result === ERR_INVALID_TARGET) {
-        console.log('!!! GPU.upgrade ERR_INVALID_TARGET: ', target);
-      }
-      if(creep.carry.energy === 0) {
-        creep.memory.missionStage += 1;
-        creep.say('Empty');
-      }
-      return result;
     }
+    return result;
 
   },
 
   harvest: function(creep, target) {
     console.log('harvest hit');
 
+    let result = creep.harvest(target);
     if(creep.carry.energy === creep.carryCapacity) {
       creep.memory.missionStage += 1;
       creep.say('Full');
-      return;
-    } else {
-      let result = creep.harvest(target);
-      if(creep.carry.energy === creep.carryCapacity) {
-        creep.memory.missionStage += 1;
-        creep.say('Full');
-      }
-      return result;
     }
+    return result;
   },
 
 };
