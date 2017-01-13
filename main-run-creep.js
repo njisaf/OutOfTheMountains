@@ -10,11 +10,14 @@ module.exports = function(creep) {
   let length = Object.keys(mission).length;
   let missionStage = creep.memory.missionStage;
 
+  console.log(creep.name + ' missionStage now: ' + creep.memory.missionStage);
+
   //we'll store conditions on the first index of mission;
 
   if (missionStage === length) {
     creep.memory.missionStage = 1;
     missionStage = 1;
+    console.log(creep.name + ' missionStage reset to: ' + creep.memory.missionStage);
   }
 
   let model = creep.memory.model;
