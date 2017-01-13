@@ -35,8 +35,12 @@ module.exports = function(creep) {
   }
 
   let assignedTo = creep.memory.assignedTo;
-  let target = this.rooms[assignedTo][object][0];
   console.log('run-room: ', assignedTo);
+  let room = this.rooms[assignedTo];
+  console.log('room ', room);
+  let list = room[object];
+  console.log('list ', list);
+  let target = list[0];
   console.log('run-target: ', target);
 
   let doThis = role[action](target, next);
