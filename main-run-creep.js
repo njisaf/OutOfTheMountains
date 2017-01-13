@@ -34,9 +34,8 @@ module.exports = function(creep) {
     console.log('!!! GPU next is not a function. Creep: ', creep);
   }
 
-  let objectSplit = object.split('@');
   let assignedTo = creep.memory.assignedTo;
-  let target = this.rooms[assignedTo][objectSplit[1][0]][objectSplit[0]];
+  let target = this.rooms[assignedTo][object][0];
   console.log('run-room: ', assignedTo);
   console.log('run-target: ', target);
 
