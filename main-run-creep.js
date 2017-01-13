@@ -23,8 +23,7 @@ module.exports = function(creep) {
   console.log('stepSplit', stepSplit);
   let action = stepSplit[0];
   let object = stepSplit[1];
-  let hash = stepSplit[2];
-  let next = stepSplit[3];
+  let next = stepSplit[2];
 
   if (typeof role[action] !== 'function') {
     console.log('!!! GPU action is not a function. Creep: ', creep);
@@ -34,13 +33,12 @@ module.exports = function(creep) {
   }
 
 
-  //I'll just have to stick the sources on the room object and do this here.
-  if (object === 'source') {
-    
-  }
+  let room = creep.pos.room;
+  console.log('run-room: ', room);
 
-  let target = Game[object][hash];
-  console.log('target', target);
+  let objectSplit = object.split('@');
+  let target = objectSplit[1][objectSplit[0]];
+  console.log('run-target', target);
 
   let doThis = role[action](target, next);
   doThis();

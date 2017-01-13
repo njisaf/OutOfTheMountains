@@ -3,85 +3,43 @@
 const run = require('main-run-creep');
 const cleanAll = require('main-clean-all');
 
-// const determineRole = require('helper-determine-role');
 const spawnCreep = require('helper-spawn-creep');
 
-const roomModel = require('datum-room-model');
+// const roomModel = require('datum-room-model');
 
 
 
 module.exports.loop = function() {
-
-  // PathFinder.use(isEnabled);
 
   this.fact = {};
   let fact = this.fact;
 
   fact.rooms = {};
   fact.creeps = {};
-  fact.spawns = {};
-
+  // fact.spawns = {};
   fact.globalEnergyAvailable = 0;
   fact.globalEnergyCapacityAvailable = 0;
 
-  //build all stats; Do that first. We'll reformat later if we really need to.
-  for (var room in Game.rooms) {
+  //let's just do this one at a goddamn time just to save our sanity.
+  for (var _room in Game.rooms) {
 
-    fact.rooms[room] = {};
+    fact.rooms[_room] = {};
+    let room = fact.rooms[_room];
 
-    fact.rooms[room].creeps = {};
-    fact.rooms[room].creepMissionCount = {};
+    room.energyAvailable = Game.rooms[_room].energyAvailable;
+    room.energyCapacityAvailable = Game.rooms[_room].energyCapacityAvailable;
 
-    fact.rooms[room].roomLevel = Game.rooms[room].controller.level;
-    fact.rooms[room].levelModel = roomModel[fact.roomLevel];
+    fact.globalEnergyAvailable += room.energyAvailable;
+    fact.globalEnergyCapacityAvailable += room.energyCapacityAvailable;
 
-    fact.globalEnergyAvailable += Game.rooms[room].energyAvailable;
-    fact.globalEnergyCapacityAvailable += Game.rooms[room].energyCapacityAvailable;
+    //these room are all on fact, don't forget
+    room.controller = Game.rooms[_room].controller;
+    room.sources = Game.rooms[_room].find(FIND_SOURCES);
+    room.spawns = Game.rooms[_room].find(FIND_MY_SPAWNS);
+    room.structures = Game.rooms[_room].find(FIND_MY_STRUCTURES);
 
-    if (fact.rooms[room].levelModel) {
-      fact.rooms[room].creepModelCount = {};
-      for (var modelRole in fact.rooms[room].levelModel.maintain) {
-        fact.rooms[room].creepModelCount[modelRole] = 0;
-      }
-    }
-  }
+    //next we're going to run calculations on the things. We'll stick the functions right on the fact room, and call them each time the mission hits. FUCK YEAH
 
-  for (var creep in Game.creeps) {
-
-    fact.creeps[creep] = {};
-
-    let creepRoom = Game.creeps[creep].pos.room;
-    fact.rooms[creepRoom].creeps = {};
-    fact.rooms[creepRoom].creeps[creep] = {};
-
-    //add missions and mission counts
-    let creepMission = Game.creeps[creep].memory.mission;
-    fact.creeps[creep].mission = creepMission;
-    fact.rooms[creepRoom][creep].mission = creepMission;
-    fact.rooms[creepRoom].creepMissionCount = {};
-    fact.rooms[creepRoom].creepMissionCount[creepMission][creep] = {};
-
-    //do roles too
-    let creepModel = Game.creeps[creep].memory.model;
-    fact.creeps[creep].model = creepModel;
-    fact.rooms[creepRoom][creep].model = creepModel;
-    fact.rooms[creepRoom].creepModelCount = {};
-    fact.rooms[creepRoom].creepModelCount[creepModel][creep] = {};
-  }
-
-  //okay now we need the spawns!
-  for (var spawn in Game.spawns) {
-
-    //add spawn to the spawn list
-    // fact.spawns[spawn] = {};
-
-    //find the spawn room
-    let spawnRoom = Game.spawns[spawn].pos.room;
-
-    //add spawn list to the room, add the spawn to the list;
-    fact.rooms[spawnRoom].spawns = {};
-    //trying to add whole object, I'll need it all. Might not work?
-    fact.rooms[spawnRoom].spawns[spawn] = Game.spawns[spawn];
   }
 
 
@@ -91,6 +49,9 @@ module.exports.loop = function() {
 
   for (var spawnRoom in Game.rooms) {
     let room = fact.rooms[spawnRoom];
+    if (!room) {
+      console.log('!!! Not ready for spawning! Room: ', room);
+    }
     let mission = {
       0: null,
       1: 'moveTo.sources@room.harvest',
