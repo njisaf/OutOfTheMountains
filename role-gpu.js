@@ -8,11 +8,11 @@
 
 module.exports = {
 
-  moveTo: function(target, next) {
+  moveTo: function(next) {
     console.log('MoveTo hit');
 
     let _next = this[next];
-    return function _moveTo(creep) {
+    return function _moveTo(creep, target) {
       if (_next(creep, target) === ERR_NOT_IN_RANGE) {
         creep.moveTo(target);
       } else {
