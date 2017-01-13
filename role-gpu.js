@@ -10,7 +10,11 @@ module.exports = {
   moveTo: function(creep, target, next) {
     console.log('MoveTo hit');
 
-    if (next(creep, target) === ERR_NOT_IN_RANGE) {
+    let check = next(creep, target);
+    console.log('moveTo check: ', check);
+
+    if (check === ERR_NOT_IN_RANGE) {
+      console.log('moveTo target', target);
       creep.moveTo(target);
     } else {
       next(creep, target);
@@ -37,6 +41,7 @@ module.exports = {
   },
 
   harvest: function(creep, target) {
+    console.log('harvest hit');
 
     if(creep.carry.energy === creep.carryCapacity) {
       creep.memory.missionStage += 1;
