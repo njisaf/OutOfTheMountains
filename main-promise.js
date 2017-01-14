@@ -1,42 +1,37 @@
 'use strict';
 
-module.exports = Promise;
+//https://github.com/floatdrop/pinkie
 
 var PENDING = 'pending';
-var SEALED = 'sealed';
+var SETTLED = 'settled';
 var FULFILLED = 'fulfilled';
 var REJECTED = 'rejected';
-var NOOP = function(){};
+var NOOP = function () {};
+var isNode = typeof global !== 'undefined' && typeof global.process !== 'undefined' && typeof global.process.emit === 'function';
 
-function isArray(value) {
-  return Object.prototype.toString.call(value) === '[object Array]';
-}
-
-// async calls
-var asyncSetTimer = typeof setImmediate !== 'undefined' ? setImmediate : setTimeout;
+var asyncSetTimer = typeof setImmediate === 'undefined' ? setTimeout : setImmediate;
 var asyncQueue = [];
 var asyncTimer;
 
-function asyncFlush(){
+function asyncFlush() {
   // run promise callbacks
-  for (var i = 0; i < asyncQueue.length; i++)
+  for (var i = 0; i < asyncQueue.length; i++) {
     asyncQueue[i][0](asyncQueue[i][1]);
+  }
 
   // reset async asyncQueue
   asyncQueue = [];
   asyncTimer = false;
 }
 
-function asyncCall(callback, arg){
+function asyncCall(callback, arg) {
   asyncQueue.push([callback, arg]);
 
-  if (!asyncTimer)
-  {
+  if (!asyncTimer) {
     asyncTimer = true;
     asyncSetTimer(asyncFlush, 0);
   }
 }
-
 
 function invokeResolver(resolver, promise) {
   function resolvePromise(value) {
@@ -49,35 +44,35 @@ function invokeResolver(resolver, promise) {
 
   try {
     resolver(resolvePromise, rejectPromise);
-  } catch(e) {
+  } catch (e) {
     rejectPromise(e);
   }
 }
 
-function invokeCallback(subscriber){
+function invokeCallback(subscriber) {
   var owner = subscriber.owner;
-  var settled = owner.state_;
-  var value = owner.data_;
+  var settled = owner._state;
+  var value = owner._data;
   var callback = subscriber[settled];
   var promise = subscriber.then;
 
-  if (typeof callback === 'function')
-  {
+  if (typeof callback === 'function') {
     settled = FULFILLED;
     try {
       value = callback(value);
-    } catch(e) {
+    } catch (e) {
       reject(promise, e);
     }
   }
 
-  if (!handleThenable(promise, value))
-  {
-    if (settled === FULFILLED)
+  if (!handleThenable(promise, value)) {
+    if (settled === FULFILLED) {
       resolve(promise, value);
+    }
 
-    if (settled === REJECTED)
+    if (settled === REJECTED) {
       reject(promise, value);
+    }
   }
 }
 
@@ -85,28 +80,27 @@ function handleThenable(promise, value) {
   var resolved;
 
   try {
-    if (promise === value)
+    if (promise === value) {
       throw new TypeError('A promises callback cannot return that same promise.');
+    }
 
-    if (value && (typeof value === 'function' || typeof value === 'object'))
-    {
-      var then = value.then;  // then should be retrived only once
+    if (value && (typeof value === 'function' || typeof value === 'object')) {
+      // then should be retrieved only once
+      var then = value.then;
 
-      if (typeof then === 'function')
-      {
-        then.call(value, function(val){
-          if (!resolved)
-          {
+      if (typeof then === 'function') {
+        then.call(value, function (val) {
+          if (!resolved) {
             resolved = true;
 
-            if (value !== val)
+            if (value === val) {
+              fulfill(promise, val);
+            } else {
               resolve(promise, val);
-            else
-            fulfill(promise, val);
+            }
           }
-        }, function(reason){
-          if (!resolved)
-          {
+        }, function (reason) {
+          if (!resolved) {
             resolved = true;
 
             reject(promise, reason);
@@ -117,8 +111,9 @@ function handleThenable(promise, value) {
       }
     }
   } catch (e) {
-    if (!resolved)
+    if (!resolved) {
       reject(promise, e);
+    }
 
     return true;
   }
@@ -126,61 +121,64 @@ function handleThenable(promise, value) {
   return false;
 }
 
-function resolve(promise, value){
-  if (promise === value || !handleThenable(promise, value))
+function resolve(promise, value) {
+  if (promise === value || !handleThenable(promise, value)) {
     fulfill(promise, value);
+  }
 }
 
-function fulfill(promise, value){
-  if (promise.state_ === PENDING)
-  {
-    promise.state_ = SEALED;
-    promise.data_ = value;
+function fulfill(promise, value) {
+  if (promise._state === PENDING) {
+    promise._state = SETTLED;
+    promise._data = value;
 
     asyncCall(publishFulfillment, promise);
   }
 }
 
-function reject(promise, reason){
-  if (promise.state_ === PENDING)
-  {
-    promise.state_ = SEALED;
-    promise.data_ = reason;
+function reject(promise, reason) {
+  if (promise._state === PENDING) {
+    promise._state = SETTLED;
+    promise._data = reason;
 
     asyncCall(publishRejection, promise);
   }
 }
 
 function publish(promise) {
-  var callbacks = promise.then_;
-  promise.then_ = undefined;
+  promise._then = promise._then.forEach(invokeCallback);
+}
 
-  for (var i = 0; i < callbacks.length; i++) {
-    invokeCallback(callbacks[i]);
+function publishFulfillment(promise) {
+  promise._state = FULFILLED;
+  publish(promise);
+}
+
+function publishRejection(promise) {
+  promise._state = REJECTED;
+  publish(promise);
+  if (!promise._handled && isNode) {
+    global.process.emit('unhandledRejection', promise._data, promise);
   }
 }
 
-function publishFulfillment(promise){
-  promise.state_ = FULFILLED;
-  publish(promise);
-}
-
-function publishRejection(promise){
-  promise.state_ = REJECTED;
-  publish(promise);
+function notifyRejectionHandled(promise) {
+  global.process.emit('rejectionHandled', promise);
 }
 
 /**
 * @class
 */
-function Promise(resolver){
-  if (typeof resolver !== 'function')
-    throw new TypeError('Promise constructor takes a function argument');
+function Promise(resolver) {
+  if (typeof resolver !== 'function') {
+    throw new TypeError('Promise resolver ' + resolver + ' is not a function');
+  }
 
-  if (this instanceof Promise === false)
+  if (this instanceof Promise === false) {
     throw new TypeError('Failed to construct \'Promise\': Please use the \'new\' operator, this object constructor cannot be called as a function.');
+  }
 
-  this.then_ = [];
+  this._then = [];
 
   invokeResolver(resolver, this);
 }
@@ -188,11 +186,12 @@ function Promise(resolver){
 Promise.prototype = {
   constructor: Promise,
 
-  state_: PENDING,
-  then_: null,
-  data_: undefined,
+  _state: PENDING,
+  _then: null,
+  _data: undefined,
+  _handled: false,
 
-  then: function(onFulfillment, onRejection){
+  then: function (onFulfillment, onRejection) {
     var subscriber = {
       owner: this,
       then: new this.constructor(NOOP),
@@ -200,93 +199,96 @@ Promise.prototype = {
       rejected: onRejection,
     };
 
-    if (this.state_ === FULFILLED || this.state_ === REJECTED)
-    {
+    if ((onRejection || onFulfillment) && !this._handled) {
+      this._handled = true;
+      if (this._state === REJECTED && isNode) {
+        asyncCall(notifyRejectionHandled, this);
+      }
+    }
+
+    if (this._state === FULFILLED || this._state === REJECTED) {
       // already resolved, call callback async
       asyncCall(invokeCallback, subscriber);
-    }
-    else
-    {
+    } else {
       // subscribe
-      this.then_.push(subscriber);
+      this._then.push(subscriber);
     }
 
     return subscriber.then;
   },
 
-  'catch': function(onRejection) {
+  catch: function (onRejection) {
     return this.then(null, onRejection);
   },
 };
 
-Promise.all = function(promises){
-  var Class = this;
-
-  if (!isArray(promises))
+Promise.all = function (promises) {
+  if (!Array.isArray(promises)) {
     throw new TypeError('You must pass an array to Promise.all().');
+  }
 
-  return new Class(function(resolve, reject){
+  return new Promise(function (resolve, reject) {
     var results = [];
     var remaining = 0;
 
-    function resolver(index){
+    function resolver(index) {
       remaining++;
-      return function(value){
+      return function (value) {
         results[index] = value;
-        if (!--remaining)
+        if (!--remaining) {
           resolve(results);
+        }
       };
     }
 
-    for (var i = 0, promise; i < promises.length; i++)
-    {
+    for (var i = 0, promise; i < promises.length; i++) {
       promise = promises[i];
 
-      if (promise && typeof promise.then === 'function')
+      if (promise && typeof promise.then === 'function') {
         promise.then(resolver(i), reject);
-      else
-      results[i] = promise;
+      } else {
+        results[i] = promise;
+      }
     }
 
-    if (!remaining)
+    if (!remaining) {
       resolve(results);
+    }
   });
 };
 
-Promise.race = function(promises){
-  var Class = this;
-
-  if (!isArray(promises))
+Promise.race = function (promises) {
+  if (!Array.isArray(promises)) {
     throw new TypeError('You must pass an array to Promise.race().');
+  }
 
-  return new Class(function(resolve, reject) {
-    for (var i = 0, promise; i < promises.length; i++)
-    {
+  return new Promise(function (resolve, reject) {
+    for (var i = 0, promise; i < promises.length; i++) {
       promise = promises[i];
 
-      if (promise && typeof promise.then === 'function')
+      if (promise && typeof promise.then === 'function') {
         promise.then(resolve, reject);
-      else
-      resolve(promise);
+      } else {
+        resolve(promise);
+      }
     }
   });
 };
 
-Promise.resolve = function(value){
-  var Class = this;
-
-  if (value && typeof value === 'object' && value.constructor === Class)
+Promise.resolve = function (value) {
+  if (value && typeof value === 'object' && value.constructor === Promise) {
     return value;
+  }
 
-  return new Class(function(resolve){
+  return new Promise(function (resolve) {
     resolve(value);
   });
 };
 
-Promise.reject = function(reason){
-  var Class = this;
-
-  return new Class(function(resolve, reject){
+Promise.reject = function (reason) {
+  return new Promise(function (resolve, reject) {
     reject(reason);
   });
 };
+
+module.exports = Promise;
