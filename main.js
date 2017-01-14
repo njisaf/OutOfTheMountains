@@ -1,5 +1,7 @@
 'use strict';
 
+const Promise = require('main-promise');
+
 const run = require('main-run-creep');
 const cleanAll = require('main-clean-all');
 
