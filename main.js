@@ -24,7 +24,16 @@ module.exports.loop = function() {
   fact.globalEnergyAvailable = 0;
   fact.globalEnergyCapacityAvailable = 0;
 
-  //let's just do this one at a goddamn time just to save our sanity.
+  function testPromises(greeting) {
+    return new Promise((resolve, reject) => {
+      if(greeting === 'hello') resolve('hello to you');
+      if(greeting !== 'hello') reject('goodbye');
+    });
+  }
+
+  testPromises('hello')
+  .then(res => console.log('res: ', res));
+
   for (var _room in Game.rooms) {
 
     fact.rooms[_room] = {};
