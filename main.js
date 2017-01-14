@@ -1,7 +1,5 @@
 'use strict';
 
-const Promise = require('main-promise');
-
 const run = require('main-run-creep');
 const cleanAll = require('main-clean-all');
 
@@ -23,20 +21,6 @@ module.exports.loop = function() {
   // fact.spawns = {};
   fact.globalEnergyAvailable = 0;
   fact.globalEnergyCapacityAvailable = 0;
-
-  // let testPromises = function(greeting) {
-  //   return new Promise((resolve, reject) => {
-  //     if(greeting === 'hello') resolve('hello to you');
-  //     if(greeting !== 'hello') reject('goodbye');
-  //   });
-  // };
-
-  let testPromises = new Promise(function(resolve) {
-    resolve('unicorns');
-  });
-
-  testPromises()
-  .then(msg => console.log('msg: ', msg));
 
   for (var _room in Game.rooms) {
 
