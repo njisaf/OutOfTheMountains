@@ -24,15 +24,19 @@ module.exports.loop = function() {
   fact.globalEnergyAvailable = 0;
   fact.globalEnergyCapacityAvailable = 0;
 
-  let testPromises = function(greeting) {
-    return new Promise((resolve, reject) => {
-      if(greeting === 'hello') resolve('hello to you');
-      if(greeting !== 'hello') reject('goodbye');
-    });
-  };
+  // let testPromises = function(greeting) {
+  //   return new Promise((resolve, reject) => {
+  //     if(greeting === 'hello') resolve('hello to you');
+  //     if(greeting !== 'hello') reject('goodbye');
+  //   });
+  // };
 
-  testPromises('hello')
-  .then(res => console.log('res: ', res));
+  let testPromises = new Promise(function(resolve) {
+    resolve('unicorns');
+  });
+
+  testPromises()
+  .then(msg => console.log('msg: ', msg));
 
   for (var _room in Game.rooms) {
 
