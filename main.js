@@ -24,12 +24,12 @@ module.exports.loop = function() {
   fact.globalEnergyAvailable = 0;
   fact.globalEnergyCapacityAvailable = 0;
 
-  function testPromises(greeting) {
+  let testPromises = function(greeting) {
     return new Promise((resolve, reject) => {
       if(greeting === 'hello') resolve('hello to you');
       if(greeting !== 'hello') reject('goodbye');
     });
-  }
+  };
 
   testPromises('hello')
   .then(res => console.log('res: ', res));
